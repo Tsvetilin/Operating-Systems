@@ -1,0 +1,1 @@
+# cd, mkdir, mv, cp
