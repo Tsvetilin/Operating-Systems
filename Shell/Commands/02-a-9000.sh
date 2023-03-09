@@ -2,6 +2,6 @@
 #изтрийте директорията myetc и цялото и съдържание
 #изтрийте архива c_start.tar
 
-tar -c -f c_start.tar $(find myetc/ -iname 'c*')
+tar -c -f c_start.tar $(find myetc/ -iname 'c*') # or tar -caf c_start.tar.zst $(find myetc/ -type f -iname 'c*')
 rm -rf myetc/
 rm -i c_start.tar
