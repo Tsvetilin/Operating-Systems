@@ -3,4 +3,5 @@
 #15мин (по възможност изключете .).  Запишете във eternity името (път) на
 #файла и времето (unix time) на последната промяна.
 
-find ~ -type f -mmin -15 ! -name ".*" -printf "%p %A@\n"
+touch eternity
+find ~ -type f -mmin -15 ! -name ".*" -printf "%p %A@\n" > eternity
