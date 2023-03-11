@@ -1,8 +1,8 @@
 #Намерете имената на 10-те файла във вашата home директория, чието съдържание е
 #редактирано най-скоро. На първо място трябва да бъде най-скоро редактираният
 #файл.
-find ~ -printf "%T@ %f\n" | sort -k 1n -t ' ' | sort -r | cut -d ' ' -f2 | head -n 10
+find ~ -printf "%T@ %f\n" | sort -k 1nr -t ' ' | cut -d ' ' -f2 | head -n 10
 
 #Намерете 10-те най-скоро достъпени файлове. (hint: Unix time)
-find ~ -printf "%A@ %f\n" | sort -k 1n -t ' ' | sort -r | cut -d ' ' -f2 | head -n 10
+find ~ -printf "%A@ %f\n" | sort -k 1nr -t ' ' | cut -d ' ' -f2 | head -n 10
 
