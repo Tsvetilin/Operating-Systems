@@ -3,4 +3,4 @@
 #Хистограма наричаме поредица от редове, всеки от които има вида:
 #<брой срещания> <какво се среща толкова пъти>
 
- cat /etc/services | grep -o '[a-zA-Z]*' | tr A-Z a-z | sort | uniq -c | sort -nr | head
+ cat /etc/services | grep -o '[a-zA-Z]*' | tr [A-Z] [a-z] | sort | uniq -c | sort -nr | head
