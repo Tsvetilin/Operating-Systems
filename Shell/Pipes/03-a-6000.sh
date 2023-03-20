@@ -50,6 +50,8 @@ awk '{if(NF > 0) print $0}' emp.data
 
 # - всеки ред, който има повече от 17 знака
 awk 'length($0) > 17' emp.data
+#or
+awk '/.{18,}$/{print $0}' emp.data
 
 # - броя на полетата във всеки ред и самият ред
 awk '{print "fields:" NF "\n" "line:" $0}' emp.data
