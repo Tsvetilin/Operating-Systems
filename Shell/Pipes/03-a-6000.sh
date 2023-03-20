@@ -8,6 +8,8 @@ awk 'END{print NR}' emp.data
 awk 'BEGIN{i=0} {i++} END{print i}' emp.data
 #or
 awk '{i+=1} END{print i}' emp.data
+#or
+cat emp.data | awk 'END{print NR}'
 
 # - третия ред
 awk 'NR==3 {print}' emp.data
