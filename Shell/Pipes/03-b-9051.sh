@@ -10,4 +10,8 @@ cat population.csv | awk -F ',' 'BEGIN {counter = 0} $3==2008 {counter+=$4} END 
 
 #or
 
+cat population.csv | awk -F ',' 'BEGIN {counter = 0} $(NF-1)==2008 {counter+=$(NF)} END {print counter}'
+
+#or
+
 cat population.csv | egrep ",2008," | cut -d ',' -f 4 | sed 's/.*/+ &/g' | xargs | tail -c +3 | bc
