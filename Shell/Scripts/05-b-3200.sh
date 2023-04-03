@@ -14,8 +14,8 @@ if [[ ! -d ${1} ]] ; then
 fi
 
 
-filesCount=$(find "${1}" -type f 2>&1 | wc -l)
-directoriesCount=$(find "${1}" -type d 2>&1 | wc -l)
+filesCount=$(find "${1}" -mindepth 1 -type f 2>&1 | wc -l)
+directoriesCount=$(find "${1}" -mindepth 1 -type d 2>&1 | wc -l)
 
 echo "Files: ${filesCount}"
 echo "Directories: ${directoriesCount}"
