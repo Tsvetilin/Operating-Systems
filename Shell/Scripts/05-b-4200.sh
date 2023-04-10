@@ -1,3 +1,24 @@
+#!/bin/bash
+
+max=0
+currentCount=0
+
+while read ch; do
+        if [[ ${ch} == "{" ]] ; then
+                currentCount=$(( currentCount + 1 ))
+        else
+
+                if [[ max -lt currentCount ]] ; then
+                    max=${currentCount}
+                fi
+
+                currentCount=$(( currentCount - 1 ))
+        fi
+
+done < <( cat "${1}" | grep -E -o '[{}]' )
+
+echo "Deepest nesting: ${max}"
+
 #Имате компилируем (a.k.a няма синтактични грешки) source file на езика C. Напишете shell script, който да покaзва колко е дълбоко най-дълбокото nest-ване (влагане).
 #Примерен .c файл:
 #
@@ -20,25 +41,4 @@
 #./count_nesting sum_c_code.c
 #
 #Изход:
-#The deepest nesting is 2 levels
-
-#!/bin/bash
-
-max=0
-currentCount=0
-
-while read ch; do
-        if [[ ${ch} == "{" ]] ; then
-                currentCount=$(( currentCount + 1 ))
-        else
-
-                if [[ max -lt currentCount ]] ; then
-                    max=${currentCount}
-                fi
-
-                currentCount=$(( currentCount - 1 ))
-        fi
-
-done < <( cat "${1}" | grep -E -o '[{}]' )
-
-echo "Deepest nesting: ${max}"
+#The deepest nesting is 2 levels deep.
