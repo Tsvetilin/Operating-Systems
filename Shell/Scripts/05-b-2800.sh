@@ -3,12 +3,12 @@
 #!/bin/bash
 
 # v1
-if [[ $# -ne 1 ]]; then
+if [[ $# -ne 1 ]] ; then
         echo "Invalid number of arguments"
         exit 1
 fi
 
-if [[ ! $1 =~ ^[a-zA-Z0-9]+$ ]]; then
+if [[ ! $1 =~ ^[a-zA-Z0-9]+$ ]] ; then
         echo "Invalid input"
         exit 2
 fi
@@ -16,12 +16,12 @@ fi
 echo "yes"
 
 # v2
-if [[ ${#} -ne 1 ]]; then
+if [[ ${#} -ne 1 ]] ; then
         echo "1 argument expected"
         exit 1
 fi
 
-if echo "${1}" | grep -q -E '^[a-zA-Z0-9]*$'; then
+if echo "${1}" | grep -q -E '^[a-zA-Z0-9]*$' ; then
         echo "yes"
 else
         echo "no"

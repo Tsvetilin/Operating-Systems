@@ -4,11 +4,11 @@
 
 #!/bin/bash
 
-if [[ ! -f ${file1} ]]; then
+if [[ ! -f ${file1} ]] ; then
   echo "${file1} is not found"
-elif  [[ ! -f ${file2} ]]; then
+elif  [[ ! -f ${file2} ]] ; then
   echo "${file2} is not found"
-elif  [[ ! -f ${file2} ]]; then
+elif  [[ ! -f ${file3} ]] ; then
   echo"${file3} is not found"
 fi
 
