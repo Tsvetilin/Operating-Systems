@@ -8,3 +8,10 @@ touch ~/practice/01/f2
 touch ~/practice/01/f3
 mkdir -p ~/dir1
 cp ~/practice/01/f1 ~/practice/01/f2 ~/practice/01/f3 ~/dir1
+
+#or
+
+mkdir -p ~/practice/01
+touch ~/practice/01/f{1,2,3}
+mkdir ~/dir1
+cp ~/practice/01/f{1,2,3} ~/dir1/

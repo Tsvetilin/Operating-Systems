@@ -4,3 +4,8 @@
 mkdir -p ~/myetc
 find /etc/ -perm /u+r,g+r,o+r -exec cp -r {} myetc/ \;
 
+#or
+
+cp -r $(find /etc/ -perm /o+w,g+w,u+w) ~/myetc/
+
+
