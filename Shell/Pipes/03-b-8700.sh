@@ -10,3 +10,7 @@ cat /etc/passwd | cut -d ':' -f4 | sort -n | uniq -c | sort -nr | head -n 5 | aw
 #or 
 
 cat /etc/passwd | cut -d ':' -f4 | sort -n | uniq -c | sort -nr | head -n 5 | awk '{print $2}' | xargs -I{} grep ':{}:' /etc/group | cut -d ':' -f 1
+
+#or
+
+cat /etc/passwd | cut -d ':' -f4 | sort -n | uniq -c | sort -nr | head -n 5 | awk '{print $NF}' | xargs -I{} grep ':{}:' /etc/group | awk -F ':' '{print $3 " " $1}'
