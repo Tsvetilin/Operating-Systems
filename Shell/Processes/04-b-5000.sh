@@ -5,3 +5,7 @@ ps -e -g root -o rss= | awk '{sum+=$1} END {print sum}'
 #or
 
 ps -e -g root -o rss= |sed -E 's/.*/+ &/g' | xargs | tail -c +3 | bc
+
+#or
+
+ps -A -o egroup,drs | grep "^root" | awk '{sum+=$NF} END{print sum}'
