@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ $# -ne 1 ]] ; then
+        echo "Expected one argument"
+        exit 1
+fi
+
 max=0
 currentCount=0
 
@@ -19,7 +24,8 @@ done < <( cat "${1}" | grep -E -o '[{}]' )
 
 echo "Deepest nesting: ${max}"
 
-#Имате компилируем (a.k.a няма синтактични грешки) source file на езика C. Напишете shell script, който да покaзва колко е дълбоко най-дълбокото nest-ване (влагане).
+#Имате компилируем (a.k.a няма синтактични грешки) source file на езика C. Напишете shell script, който да покaзва
+#колко е дълбоко най-дълбокото nest-ване (влагане).
 #Примерен .c файл:
 #
 ##include <stdio.h>

@@ -27,4 +27,36 @@ while true ; do
         sleep 1
 done
 
-#Да се напише shell скрипт, който получава при стартиране като параметър в командния ред идентификатор на потребител. Скриптът периодично (sleep(1)) да проверява дали потребителят е log-нат, и ако да - да прекратява изпълнението си, извеждайки на стандартния изход подходящо съобщение.
+#v2
+
+userName=${1}
+
+egrep -q "${userName}" /etc/passwd
+isUserExisting=${?}
+
+if [[ ${isUserExisting} -ne 0 ]] ; then
+        echo "User not existing"
+        exit 2
+fi
+
+who | egrep -q "^${userName}"
+isLogged=${?}
+
+if [[ ${isLogged} -eq 0 ]] ; then
+        echo "${userName} is logged"
+else
+        while true ; do
+                echo "Waiting for user to log in"
+                who | egrep -q "^${userName}"
+                isLogged=${?}
+                if [[ ${isLogged} -eq 0 ]] ; then
+                        echo "${userName} is logged"
+                        exit 0
+                fi
+                sleep 1
+        done
+fi
+
+#Да се напише shell скрипт, който получава при стартиране като параметър в командния ред идентификатор на потребител.
+#Скриптът периодично (sleep(1)) да проверява дали потребителят е log-нат, и ако да - да прекратява изпълнението си,
+#извеждайки на стандартния изход подходящо съобщение.
