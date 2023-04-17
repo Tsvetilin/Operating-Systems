@@ -7,3 +7,5 @@
 # Гарантирайте, че серията от команди няма изход
 
 find ~ -maxdepth 1 -type f -user $(whoami) | xargs -I{} chmod 775 {} >/dev/null
+#or
+find ~ -mindepth 1 -maxdepth 1 -type f -user $(id -u) 2>/dev/null | xargs -I{} chmod 775 {} >/dev/null

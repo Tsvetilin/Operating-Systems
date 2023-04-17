@@ -29,3 +29,6 @@
 # uranus;I;19.19126393;14.5;63.102;1.3;6.8352
 
 cat planets.txt | sort -k3n -t ';' | grep $(sort -k3nr -t ';' planets.txt | head -n 1 | cut -d ';' -f2) | head -n 1 | tr ';' ' ' | awk '{print $1 "\t" $4}'
+#or
+cat planets.txt | tail -n +2 | sort -k3nr -t ';' | head -n1 | awk -F ';' '{print $2}' | xargs -I{} awk -F ';' '{if ($2=="{}") print $0}' planets.txt | sort -k3n -t ';' | head -n1 | awk -F ';' '{print $1 "\t" $4}'
+
