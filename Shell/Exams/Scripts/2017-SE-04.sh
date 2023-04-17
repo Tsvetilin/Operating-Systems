@@ -39,4 +39,21 @@ for read FILE TYPE ; do
     fi
 done < <(find ${DIRECTORY} -type l -printf "%f %Y\n" 2>/dev/null)
 
+#or
+BROKEN_LINKS=$(find ${DIRECTORY} -type l -exec test ! -e {} \; -print 2>/dev/null | wc -l)
+for read FILE ; do
+      if [[ ${#} -eq 2 ]]; then
+          echo "${FILE} -> $(readlink ${FILE})" >> ${2}
+      else
+          echo "${FILE} -> $(readlink ${FILE})"
+      fi
+done < <(find ${DIRECTORY} -type l -exec test -e {} \; 2>/dev/null)
+
+#or
+if [[ ${#} -eq 2 ]]; then
+  find . -type l -exec test -e {} \; -print | xargs -I{} ls -l {} | awk -F '/' '{print $NF}' >> ${2}
+else
+  find . -type l -exec test -e {} \; -print | xargs -I{} ls -l {} | awk -F '/' '{print $NF}'
+fi
+
 echo "\nBroken symlinks: ${BROKEN_LINKS}"
