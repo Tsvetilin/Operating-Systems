@@ -16,9 +16,9 @@ ps -e -o user,pid | awk '{print $1}' | sort | uniq -c | awk -v var=${prCount} '{
 counter=$(ps -e -o pid | wc -l)
 
 for time in $(ps -e -o pid,time | awk '{print $2}' | tail -n +2) ; do
-        timestamp=$(date -u -d "1970-01-01 ${time}" +%s)
-        seconds=$(( timestamp % 86400 ))
-        totalSeconds=$(( totalSeconds + seconds ))
+    timestamp=$(date -u -d "1970-01-01 ${time}" +%s)
+    seconds=$(( timestamp % 86400 ))
+    totalSeconds=$(( totalSeconds + seconds ))
 done
 totalSeconds=$(( totalSeconds / counter ))
 
@@ -26,11 +26,11 @@ time_value=$(date -u -d "@${totalSeconds}" +'%H:%M:%S')
 
 totalSeconds=$(( totalSeconds * 2 ))
 for process in $(ps -e -o user,pid,time | grep "${1}" | tail -n +2) ; do
-        pr=$(echo "${process}" | awk '{print $2}')
+    pr=$(echo "${process}" | awk '{print $2}')
     time=$(echo "${process}" | awk '{print $3}')
     timestamp=$(date -d "1970-01-01 ${time}" +%s)
-        seconds=$(( timestamp % 86400 ))
-        totalSeconds1=$(( totalSeconds + seconds ))
+    seconds=$(( timestamp % 86400 ))
+    totalSeconds1=$(( totalSeconds + seconds ))
     if [[ ${totalSeconds1} -gt ${totalSeconds} ]] ; then
                 echo "${pr}"
     fi
