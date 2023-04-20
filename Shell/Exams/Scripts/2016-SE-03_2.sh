@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 if [[ $(id -u) -eq 0 ]] ; then
@@ -17,3 +16,10 @@ for file in $(cat /etc/passwd | awk -F ':' '{if($6!="") print $6}') ; do
         fi
     fi
 done
+
+#Напишете shell скрипт който, ако се изпълнява от root, проверява кои потребители
+#на системата нямат homedir или не могат да пишат в него.
+#Примерен формат:
+#root:x:0:0:root:/root:/bin/bash
+#daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+#bin:x:2:2:bin:/bin:/usr/sbin/nologin
