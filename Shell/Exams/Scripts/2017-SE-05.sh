@@ -11,8 +11,8 @@ arch="${2}"
 files=$(find "${dir}" -mindepth 1 -maxdepth 1 -type f -printf "%f\n" | egrep "^vmlinuz-[0-9]*[.][0-9]*[.][0-9]*-${arch}$")
 result=$(echo "${files}" | awk -F '-' '{print $2 "." $0}' | tr '.' ' ' | sort -nr | tr ' ' '.' | head -n1 | cut -d '.' -f4- )
 
-#echo "${result}"
-#
+echo "${result}"
+
 #Напишете скрипт, който получава два задължителни позиционни параметъра –
 #директория и низ. Сред файловете в директорията би могло да има такива, чиито имена имат
 #структура vmlinuz-x.y.z-arch където:
