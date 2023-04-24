@@ -11,7 +11,4 @@ find ~ -newer practice/01/f3 -type f -delete
 
 rm -i $(find ~ -type f -newer practice/01/f3)
 
-#or
-
-
 #second way it does not ask for confirmation to delete
