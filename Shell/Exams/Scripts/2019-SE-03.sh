@@ -9,7 +9,7 @@ DIR="${1}"
 
 allArchives=$(find "${DIR}" -mindepth 1 -maxdepth 1 -type f -name "*_report-*.tgz" -printf "%p %M@\n")
 lastExecution=$(stat -c "%X" ${0})
-resultArchives=$(echo "${allArchives}" | awk -var=${lastExecution} '{if ($2>=var) print $1}')
+resultArchives=$(echo "${allArchives}" | awk -v var=${lastExecution} '{if ($2>=var) print $1}')
 
 while read file ; do
         NAME=$(echo ${file} | sed -E 's/(.*)_/\1/')
