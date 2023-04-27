@@ -13,7 +13,7 @@ fi
 DIRECTORY=$1
 BROKEN_LINKS=0
 
-for read FILE TYPE ; do
+while read FILE TYPE ; do
     if [[ $TYPE == 'N' ]]; then
         if [[ ${#} -eq 2 ]]; then
             echo "${FILE} -> $(readlink ${FILE})" >> ${2}
@@ -27,7 +27,7 @@ done < <(find ${DIRECTORY} -type l -printf "%f %Y\n" 2>/dev/null)
 
 #or
 BROKEN_LINKS=$(find ${DIRECTORY} -type l -exec test ! -e {} \; -print 2>/dev/null | wc -l)
-for read FILE ; do
+while read FILE ; do
       if [[ ${#} -eq 2 ]]; then
           echo "${FILE} -> $(readlink ${FILE})" >> ${2}
       else
@@ -37,9 +37,9 @@ done < <(find ${DIRECTORY} -type l -exec test -e {} \; 2>/dev/null)
 
 #or
 if [[ ${#} -eq 2 ]]; then
-  find . -type l -exec test -e {} \; -print | xargs -I{} ls -l {} | awk -F '/' '{print $NF}' >> ${2}
+  find . -type l -exec test -e {} \; -print | xargs -I{} readlink {} | xargs -I{} basename {} >> ${2}
 else
-  find . -type l -exec test -e {} \; -print | xargs -I{} ls -l {} | awk -F '/' '{print $NF}'
+  find . -type l -exec test -e {} \; -print | xargs -I{} readlink {} | xargs -I{} basename {}
 fi
 
 echo "\nBroken symlinks: ${BROKEN_LINKS}"
