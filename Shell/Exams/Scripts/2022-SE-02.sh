@@ -59,8 +59,8 @@ for object in $(echo "${objects}") ; do
                                 exit 0
                         fi
                 done
-        elif [[ ${dailyCount} -gt 2 ]] ; then
-                toDelete=$(( dailyCount - 2 )) ; then
+        elif [[ ${dailyCount} -gt 4 ]] ; then
+                toDelete=$(( dailyCount - 4 )) ; then
                 for file in $(find "${DIR}/3" -mindepth 1 -name "${object}*" -type f | sort | head -n ${toDelete}) ; do
                         rm ${file}
                         usage=$(df ${DIR} | tail -n1 | awk '{print $5}' | sed -E 's/%$//')
@@ -71,7 +71,7 @@ for object in $(echo "${objects}") ; do
         fi
 done
 
-#find "${DIR}" -mindepth 1 -type l -exec test ! -e {} \; -print | xargs -I{} rm {}
+find "${DIR}" -mindepth 1 -type l -exec test ! -e {} \; -print | xargs -I{} rm {}
 #
 #Дефинирана е система за бекъпване на сървъри, която държи направените архиви
 #в главна директория (която ще наричаме fubar ), в която има четири под-директории за различни
