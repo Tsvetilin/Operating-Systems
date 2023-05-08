@@ -1,0 +1,265 @@
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+uucp:x:10:14:uucp:/var/spool/uucp:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+gopher:x:13:30:gopher:/var/gopher:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+ntp:x:38:38::/etc/ntp:/sbin/nologin
+apache:x:48:48:Apache:/var/www:/sbin/nologin
+vcsa:x:69:69:virtual console memory owner:/dev:/sbin/nologin
+postfix:x:89:89::/var/spool/postfix:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin
+nobody:x:99:99:Nobody:/:/sbin/nologin
+saslauth:x:499:76:"Saslauthd user":/var/empty/saslauth:/sbin/nologin
+sabina:x:500:500:Sabina Bocheva:/home/sabina:/bin/bash
+student:x:501:501::/home/student:/bin/bash
+svi:x:502:500:Svetozar Ilkov:/home/svi:/bin/bash
+tslavova:x:503:500:Tihomira Slavova:/home/tslavova:/bin/bash
+jbabukov:x:504:500:Jordan Babukov:/home/jbabukov:/bin/bash
+griza:x:505:500:Hristina Zasheva:/home/griza:/bin/bash
+moni:x:506:500:Monika Filipova:/home/moni:/bin/bash
+victoria:x:507:500:Victoria Hristova:/home/victoria:/bin/bash
+kiril:x:508:500:Kiril Varadinov:/home/kiril:/bin/bash
+vasilena:x:509:500:Vassilena Slaveva:/home/vasilena:/bin/bash
+yavor:x:510:500:Yavor Mihaylov:/home/yavor:/bin/bash
+tsanka:x:511:500:Tsanka Encheva:/home/tsanka:/bin/bash
+atanas:x:512:500:Atanas Dobrev:/home/atanas:/bin/bash
+kggeorgy:x:513:500:Krasimira Georgieva:/home/kggeorgy:/bin/bash
+velin:x:514:500:Alexander Velin:/home/velin:/bin/bash
+gergana:x:515:500:Gergana TOdorova:/home/gergana:/bin/bash
+svilen:x:516:500:Svilen Andonov:/home/svilen:/bin/bash
+danail:x:517:500:Danail Dimitrov:/home/danail:/bin/bash
+vesela:x:518:500:Vesela Bandova:/home/vesela:/bin/bash
+zvezdi:x:519:500:Zvezdalina Dimitrova:/home/zvezdi:/bin/bash
+aneta:x:520:500:Aneta Nedelcheva:/home/aneta:/bin/bash
+radoslav:x:521:500:Radoslav Georgiev:/home/radoslav:/bin/bash
+nickson:x:999:504:instructor:/home/SI/nickson:/bin/bash
+user:x:1000:99:Inactive user just to start UID from 1000:/home/user:/sbin/nologin
+s81099:x:1001:503:Yanina Stoianova, KN, 2kurs, 1gr:/home/KN/s81099:/bin/bash
+s81114:x:1002:503:Teodora Angelova, KN, 2kurs, 1gr:/home/KN/s81114:/bin/bash
+s81139:x:1003:503:Simeon Georgiev, KN, 2kurs, 1gr:/home/KN/s81139:/bin/bash
+s81140:x:1004:503:Boris Sokolov, KN, 2kurs, 1gr:/home/KN/s81140:/bin/bash
+s81212:x:1005:503:Zuliana Uzunova, KN, 2kurs, 1gr:/home/KN/s81212:/bin/bash
+s81221:x:1006:503:Tania Sosova, KN, 2kurs, 1gr:/home/KN/s81221:/bin/bash
+s81238:x:1007:503:Gabriela Danova, KN, 2kurs, 1gr:/home/KN/s81238:/bin/bash
+s81239:x:1008:503:Veselin Stoianov, KN, 2kurs, 1gr:/home/KN/s81239:/bin/bash
+s81240:x:1009:503:Julian Lazarov, KN, 2kurs, 1gr:/home/KN/s81240:/bin/bash
+s81241:x:1010:503:Zasmina Atanasova, KN, 2kurs, 1gr:/home/KN/s81241:/bin/bash
+s81242:x:1011:503:Deian Petrov, KN, 2kurs, 1gr:/home/KN/s81242:/bin/bash
+s81243:x:1012:503:Stela Balcheva, KN, 2kurs, 1gr:/home/KN/s81243:/bin/bash
+s81244:x:1013:503:Denica Dimitrova, KN, 2 kurs, 1gr:/home/KN/s81244:/bin/bash
+s81251:x:1014:503:Dragomir Proichev, KN, 2kurs, 1gr:/home/KN/s81251:/bin/bash
+s81252:x:1015:503:Vencislav Dimitrov, KN, 2kurs, 1gr:/home/KN/s81252:/bin/bash
+s81253:x:1016:503:Vladimir Nachev, KN, 2kurs, 1gr:/home/KN/s81253:/bin/bash
+s81255:x:1017:503:Marian Asenov, KN, 2kurs, 1gr:/home/KN/s81255:/bin/bash
+s81258:x:1018:503:Yoana Nikolova, KN, 2kurs, 1gr:/home/KN/s81258:/bin/bash
+s81259:x:1019:503:Antonia Partycheva, KN, 2kurs, 1gr:/home/KN/s81259:/bin/bash
+s81260:x:1020:503:Ilonka Ilieva, KN, 2kurs, 1gr:/home/KN/s81260:/bin/bash
+s81262:x:1021:503:Desislava Karalinkova, KN, 2kurs, 1gr:/home/KN/s81262:/bin/bash
+s81267:x:1022:503:Yordan Ivanov, KN, 2kurs, 1gr:/home/KN/s81267:/bin/bash
+s81268:x:1023:503:Preslav Stoev, KN, 2kurs, 2gr:/home/KN/s81268:/bin/bash
+s81270:x:1024:503:Bilial Mestanov, KN, 2kurs, 2gr:/home/KN/s81270:/bin/bash
+s81275:x:1025:503:Denica Slavcheva, KN, 2kurs, 2gr:/home/KN/s81275:/bin/bash
+s81278:x:1026:503:Stela Stefanova, KN, 2kurs, 2gr:/home/KN/s81278:/bin/bash
+s81280:x:1027:503:Rangel Angelov, KN, 2kurs, 2gr:/home/KN/s81280:/bin/bash
+s81281:x:1028:503:Yana Georgieva, KN, 2kurs, 2gr:/home/KN/s81281:/bin/bash
+s81282:x:1029:503:Kristian Angelov, KN, 2kurs, 2gr:/home/KN/s81282:/bin/bash
+s81283:x:1030:503:Nikolay Nikolov, KN, 2kurs, 2gr:/home/KN/s81283:/bin/bash
+s81291:x:1031:503:Bozin Kacarski, KN, 2kurs, 2gr:/home/KN/s81291:/bin/bash
+s81295:x:1032:503:Kamen Petrov, KN, 2kurs, 2gr:/home/KN/s81295:/bin/bash
+s81297:x:1033:503:Pavel Hadziev, KN, 2kurs, 2gr:/home/KN/s81297:/bin/bash
+s81304:x:1034:503:Ivan Markov, KN, 2kurs, 2gr:/home/KN/s81304:/bin/bash
+s81312:x:1035:503:Svetoslav Iliev, KN, 2kurs, 2gr:/home/KN/s81312:/bin/bash
+s81313:x:1036:503:Atanas Mladenov, KN, 2kurs, 2gr:/home/KN/s81313:/bin/bash
+s81315:x:1037:503:Plamen Penev, KN, 2kurs, 2gr:/home/KN/s81315:/bin/bash
+s81316:x:1038:503:Eleonora Kaikova, KN, 2kurs, 2gr:/home/KN/s81316:/bin/bash
+s81317:x:1039:503:Zara Andreeva, KN, 2kurs, 2gr:/home/KN/s81317:/bin/bash
+s81321:x:1040:503:Daiana Veselinova, KN, 2kurs, 2gr:/home/KN/s81321:/bin/bash
+s81326:x:1041:503:Boris Ivanov, KN, 2kurs, 2gr:/home/KN/s81326:/bin/bash
+s81327:x:1042:503:Pavel Koev, KN, 2kurs, 2gr:/home/KN/s81327:/bin/bash
+s81333:x:1043:503:Georgi Bozinov, KN, 2kurs, 2gr:/home/KN/s81333:/bin/bash
+s81334:x:1044:503:Georgi Stoianov, KN, 2kurs, 2gr:/home/KN/s81334:/bin/bash
+s81335:x:1045:503:Georgi Ivanov, KN, 2kurs, 3gr:/home/KN/s81335:/bin/bash
+s81337:x:1046:503:Viktor Enchev, KN, 2kurs, 3gr:/home/KN/s81337:/bin/bash
+s81340:x:1047:503:Mina Bukova, KN, 2kurs, 3gr:/home/KN/s81340:/bin/bash
+s81344:x:1048:503:Emil Dudev, KN, 2kurs, 3gr:/home/KN/s81344:/bin/bash
+s81345:x:1049:503:Nikola Mladenov, KN, 2kurs, 3gr:/home/KN/s81345:/bin/bash
+s81346:x:1050:503:Svetlin Stoikov, KN, 2kurs, 3gr:/home/KN/s81346:/bin/bash
+s81347:x:1051:503:Stiliana Droneva, KN, 2kurs, 3gr:/home/KN/s81347:/bin/bash
+s81348:x:1052:503:Stoian Ivanov, KN, 2kurs, 3gr:/home/KN/s81348:/bin/bash
+s81349:x:1053:503:Nataly Arabadzijska, KN, 2kurs, 3gr:/home/KN/s81349:/bin/bash
+s81350:x:1054:503:Ralica Dardzonova, KN, 2kurs, 3gr:/home/KN/s81350:/bin/bash
+s81355:x:1055:503:Mario Donchev, KN, 2kurs, 3gr:/home/KN/s81355:/bin/bash
+s81357:x:1056:503:Antonio Angelov, KN, 2kurs, 3gr:/home/KN/s81357:/bin/bash
+s81358:x:1057:503:Asen Stoilov, KN, 2kurs, 3gr:/home/KN/s81358:/bin/bash
+s81364:x:1058:503:Stamen Dragoev, KN, 2kurs, 3gr:/home/KN/s81364:/bin/bash
+s81365:x:1059:503:Gerasim Velchev, KN, 2kurs, 3gr:/home/KN/s81365:/bin/bash
+s81366:x:1060:503:Yoana Markova, KN, 2kurs, 3gr:/home/KN/s81366:/bin/bash
+s81367:x:1061:503:Nikola Zishev, KN, 2kurs, 3gr:/home/KN/s81367:/bin/bash
+s81370:x:1062:503:Biliana Dobreva, KN, 2kurs, 3gr:/home/KN/s81370:/bin/bash
+s81378:x:1063:503:Andzela Velinova, KN, 2kurs, 3gr:/home/KN/s81378:/bin/bash
+s81379:x:1064:503:Iva Milisheva, KN, 2kurs, 3gr:/home/KN/s81379:/bin/bash
+s81380:x:1065:503:Cvetoslav Krastev, KN, 2kurs, 3gr:/home/KN/s81380:/bin/bash
+s81381:x:1066:503:Valentin Grigorov, KN, 2kurs, 3gr:/home/KN/s81381:/bin/bash
+s81013:x:1067:503:Ralica Velinova, KN, 2kurs, 5gr:/home/KN/s81013:/bin/bash
+s81101:x:1068:503:Zlatislav Kolev, KN, 2kurs, 5gr:/home/KN/s81101:/bin/bash
+s81115:x:1069:503:Nikolay Ribin, KN, 2kurs, 5gr:/home/KN/s81115:/bin/bash
+s81124:x:1070:503:Dobromira Lozeva, KN, 2kurs, 5gr:/home/KN/s81124:/bin/bash
+s81176:x:1071:503:Dimo Boichev, KN, 2kurs, 5gr:/home/KN/s81176:/bin/bash
+s81246:x:1072:503:Martin Filipov, KN, 2kurs, 5gr:/home/KN/s81246:/bin/bash
+s81247:x:1073:503:Svetomir Stoimenov, KN, 2kurs, 5gr:/home/KN/s81247:/bin/bash
+s81248:x:1074:503:Georgi Liubenov, KN, 2kurs, 5gr:/home/KN/s81248:/bin/bash
+s81249:x:1075:503:Vania Ivanova, KN, 2kurs, 5gr:/home/KN/s81249:/bin/bash
+s81250:x:1076:503:Stoian Tomicin, KN, 2kurs, 5gr:/home/KN/s81250:/bin/bash
+s81254:x:1077:503:Mariela Tihova, KN, 2kurs, 5gr:/home/KN/s81254:/bin/bash
+s81256:x:1078:503:Bogomila Peneva, KN, 2kurs, 5gr:/home/KN/s81256:/bin/bash
+s81257:x:1079:503:Vasilena Nikolova, KN, 2kurs, 5gr:/home/KN/s81257:/bin/bash
+s81261:x:1080:503:Ivan Velev, KN, 2kurs, 5gr:/home/KN/s81261:/bin/bash
+s81263:x:1081:503:Pavel Lazarov, KN, 2kurs, 5gr:/home/KN/s81263:/bin/bash
+s81264:x:1082:503:Nikolay Yordanov, KN, 2kurs, 5gr:/home/KN/s81264:/bin/bash
+s81265:x:1083:503:Dobrin Cvetkov, KN, 2kurs, 5gr:/home/KN/s81265:/bin/bash
+s81269:x:1084:503:Teodora Petkova, KN, 2kurs, 5gr:/home/KN/s81269:/bin/bash
+s81271:x:1085:503:Vladislava Markova, KN, 2kurs, 5gr:/home/KN/s81271:/bin/bash
+s81273:x:1086:503:Aleksandyr Krustev, KN, 2kurs, 6gr:/home/KN/s81273:/bin/bash
+s81276:x:1087:503:Nikolay Lazarov, KN, 2kurs, 6gr:/home/KN/s81276:/bin/bash
+s81277:x:1088:503:Ivan Margaritov, KN, 2kurs, 6gr:/home/KN/s81277:/bin/bash
+s81279:x:1089:503:Zdravko Petrov, KN, 2kurs, 6gr:/home/KN/s81279:/bin/bash
+s81287:x:1090:503:Maria Ninova, KN, 2kurs, 6gr:/home/KN/s81287:/bin/bash
+s81288:x:1091:503:Marin Shalamanov, KN, 2kurs, 6gr:/home/KN/s81288:/bin/bash
+s81289:x:1092:503:Nikolay Slavkov, KN, 2kurs, 6gr:/home/KN/s81289:/bin/bash
+s81290:x:1093:503:Mario Vasilev, KN, 2kurs, 6gr:/home/KN/s81290:/bin/bash
+s81292:x:1094:503:Violeta Yotova, KN, 2kurs, 6gr:/home/KN/s81292:/bin/bash
+s81294:x:1095:503:Ivan Angelova, KN, 2kurs, 6gr:/home/KN/s81294:/bin/bash
+s81296:x:1096:503:Elena Radoicheva, KN, 2kurs, 6gre:/home/KN/s81296:/bin/bash
+s81298:x:1097:503:Stilian Kamberov, KN, 2kurs, 6gr:/home/KN/s81298:/bin/bash
+s81300:x:1098:503:Martin Paskov, KN, 2kurs, 6gr:/home/KN/s81300:/bin/bash
+s81301:x:1099:503:Kaloian Panchev, KN, 2kurs, 6gr:/home/KN/s81301:/bin/bash
+s81318:x:1100:503:Petyr Skorcheliev, KN, 2kurs, 6gr:/home/KN/s81318:/bin/bash
+s81319:x:1101:503:Georgi Stefanov, KN, 2kurs, 6gr:/home/KN/s81319:/bin/bash
+s81322:x:1102:503:Ivan Ivanov, KN, 2kurs, 6gr:/home/KN/s81322:/bin/bash
+s81323:x:1103:503:Todor Borisov, KN, 2kurs, 6gr:/home/KN/s81323:/bin/bash
+s81329:x:1104:503:Plamena Deninska, KN, 2kurs, 6gr:/home/KN/s81329:/bin/bash
+s81330:x:1105:503:Petyr Petrov, KN, 2kurs, 7gr:/home/KN/s81330:/bin/bash
+s81332:x:1106:503:Ivan Simeonov, KN, 2kurs, 7gr:/home/KN/s81332:/bin/bash
+s81338:x:1107:503:Giuliai Seid, KN, 2kurs, 7gr:/home/KN/s81338:/bin/bash
+s81341:x:1108:503:Stoian Stoimenov, KN, 2kurs, 7gr:/home/KN/s81341:/bin/bash
+s81342:x:1109:503:Dimityr Gochev, KN, 2kurs, 7gr:/home/KN/s81342:/bin/bash
+s81351:x:1110:503:Vasil Balezdrov, KN, 2kurs, 7gr:/home/KN/s81351:/bin/bash
+s81352:x:1111:503:Dimityr Milev, KN, 2kurs, 7gr:/home/KN/s81352:/bin/bash
+s81360:x:1112:503:Georgi Fitnev, KN, 2kurs, 7gr:/home/KN/s81360:/bin/bash
+s81363:x:1113:503:Danail Hristov, KN, 2kurs, 7gr:/home/KN/s81363:/bin/bash
+s81368:x:1114:503:Elena Foteva, KN, 2kurs, 7gr:/home/KN/s81368:/bin/bash
+s81372:x:1115:503:Radoslav Rashev, KN, 2kurs, 7gr:/home/KN/s81372:/bin/bash
+s81373:x:1116:503:Anton Panaiotov, KN, 2kurs, 7gr:/home/KN/s81373:/bin/bash
+s81374:x:1117:503:Ivan Kamburov, KN, 2kurs, 7gr:/home/KN/s81374:/bin/bash
+s81382:x:1118:503:Teodora Cirkova, KN, 2kurs, 7gr:/home/KN/s81382:/bin/bash
+s81383:x:1119:503:Maria Bozkova, KN, 2kurs, 7gr:/home/KN/s81383:/bin/bash
+s81384:x:1120:503:Cvetelina Stoianova, KN, 2kurs, 7gr:/home/KN/s81384:/bin/bash
+s81386:x:1121:503:Daniela Ruseva, KN, 2kurs, 7gr:/home/KN/s81386:/bin/bash
+s81387:x:1122:503:Teodor Dimitrov, KN, 2kurs, 7gr:/home/KN/s81387:/bin/bash
+s81388:x:1123:503:Georgi Nikolov, KN, 2kurs, 7gr:/home/KN/s81388:/bin/bash
+s81390:x:1124:503:Ivan Zaliazkov, KN, 2kurs, 7gr:/home/KN/s81390:/bin/bash
+s81391:x:1125:503:Gergana Tiufekchieva, KN, 2kurs, 7gr:/home/KN/s81391:/bin/bash
+s81060:x:1126:503:Deian Deianov, KN, 2kurs, 2gr:/home/KN/s81060:/bin/bash
+human:x:522:500:Angel Angelov:/home/human:/bin/bash
+gdimov:x:523:500:Georgi Dimov:/home/gdimov:/bin/bash
+tony:x:524:500:Anton Petkov:/home/tony:/bin/bash
+lego:x:525:500:Cvetan Cvetanov:/home/lego:/bin/bash
+s61871:x:1127:504:Roxana Yaneva:/home/SI/s61871:/bin/bash
+s61812:x:1128:504:Vladimir Genchev:/home/SI/s61812:/bin/bash
+s61881:x:1129:504:Силвия Янакиева:/home/SI/s61881:/bin/bash
+s61887:x:1130:504:Лиляна Видева:/home/SI/s61887:/bin/bash
+s61888:x:1131:504:Василен Полименов:/home/SI/s61888:/bin/bash
+s61889:x:1132:504:Иван Моллов:/home/SI/s61889:/bin/bash
+s61877:x:1133:504:�Petar Prashatarov:/home/SI/s61877:/bin/bash
+s61880:x:1134:504:Daniel Pavlov:/home/SI/s61880:/bin/bash
+s61901:x:1135:504::/home/SI/s61901:/bin/bash
+s61948:x:1136:504:Desislava Ilieva:/home/SI/s61948:/bin/bash
+s61912:x:1137:504::/home/SI/s61912:/bin/bash
+s61919:x:1138:504:Александра Господинова:/home/SI/s61919:/bin/bash
+s61940:x:1139:504:Eva Paunova:/home/SI/s61940:/bin/bash
+s61952:x:1140:504:Ангел Лазов:/home/SI/s61952:/bin/bash
+s61890:x:1141:504:Merlin Mehmed:/home/SI/s61890:/bin/bash
+s61953:x:1142:504:бо�Бойко Цветанов:/home/SI/s61953:/bin/bash
+s61931:x:1143:504:Polina Todorova:/home/SI/s61931:/bin/bash
+s61954:x:1144:504:Милен Дончев:/home/SI/s61954:/bin/bash
+s61971:x:1145:504:Калоян Дочев:/home/SI/s61971:/bin/bash
+s61922:x:1146:504:Yoana Stoyanova:/home/SI/s61922:/bin/bash
+s61885:x:1147:504:Evgeni Markov:/home/SI/s61885:/bin/bash
+s61936:x:1148:504:Petko Mitkov:/home/SI/s61936:/bin/bash
+s61920:x:1149:504:Yoana Georgieva:/home/SI/s61920:/bin/bash
+s61950:x:1150:504:Ivan Mladenov:/home/SI/s61950:/bin/bash
+s61937:x:1151:504:Martin Gavrilov:/home/SI/s61937:/bin/bash
+s61886:x:1152:504:Kristina Dimova:/home/SI/s61886:/bin/bash
+s61938:x:1153:504:Nevena Gadzheva:/home/SI/s61938:/bin/bash
+s61923:x:1154:504:Elitsa Gosheva:/home/SI/s61923:/bin/bash
+s61933:x:1155:504:Katerina Petkova:/home/SI/s61933:/bin/bash
+s61894:x:1156:504:Kamen Ivanov:/home/SI/s61894:/bin/bash
+s61905:x:1157:504:Kristiyan Vachev:/home/SI/s61905:/bin/bash
+s61800:x:1158:504:Mariya Zarcheva (course 3):/home/SI/s61800:/bin/bash
+s61764:x:1159:504:Ivan Kitanovski (course 3):/home/SI/s61764:/bin/bash
+s61804:x:1160:504:Georgi Logodazhki (course 3):/home/SI/s61804:/bin/bash
+s61921:x:1161:504:Rumen Cholakov:/home/SI/s61921:/bin/bash
+s61949:x:1162:504:Nikolai Kosev:/home/SI/s61949:/bin/bash
+s855271:x:1163:504:Vladislav Timofeev:/home/SI/s855271:/bin/bash
+s61932:x:1164:504:Gergana Hristova:/home/SI/s61932:/bin/bash
+s61959:x:1165:504:Dragomir Angelov:/home/SI/s61959:/bin/bash
+s61872:x:1166:504:Petya Kyurk�chiiska:/home/SI/s61872:/bin/bash
+s61964:x:1167:504:Tsvetan Angelov, SI, 2, 4:/home/SI/s61964:/bin/bash
+s61879:x:1168:504:Mihaela Chakova, SI, 2, 4:/home/SI/s61879:/bin/bash
+s61883:x:1169:504:Stanislav Zmiicharov, SI, 2, 4:/home/SI/s61883:/bin/bash
+s61893:x:1170:504:Alexander Iliev:/home/SI/s61893:/bin/bash
+s61918:x:1171:504:Viara Kaloyanova, SI, 2, 5:/home/SI/s61918:/bin/bash
+s61927:x:1172:504:Petia Sokolova, SI, 2, 4:/home/SI/s61927:/bin/bash
+s61942:x:1173:504:Stanislav Klimov:/home/SI/s61942:/bin/bash
+s61968:x:1174:504:Elena Iankova, SI, 2, 4:/home/SI/s61968:/bin/bash
+s855262:x:1175:504::/home/SI/s855262:/bin/bash
+s61917:x:1176:504:Hristo Hristov:/home/SI/s61917:/bin/bash
+s61934:x:1177:504:Mariq Cholakova:/home/SI/s61934:/bin/bash
+s61916:x:1178:504:Simeon Aleksandrov:/home/SI/s61916:/bin/bash
+s61884:x:1179:504:Ruslan Kapelev:/home/SI/s61884:/bin/bash
+s61895:x:1180:504:Zorka Shindova:/home/SI/s61895:/bin/bash
+s61957:x:1181:504:Elena Zarkova:/home/SI/s61957:/bin/bash
+s855273:x:1182:504:Milhad Karche:/home/SI/s855273:/bin/bash
+s61873:x:1183:504:Nataliq Hadzhieva:/home/SI/s61873:/bin/bash
+s61892:x:1184:504:Radoslav Gaidarov:/home/SI/s61892:/bin/bash
+s61896:x:1185:504:Joana Mancheva:/home/SI/s61896:/bin/bash
+s61907:x:1186:504:Sabiha Dzhurina:/home/SI/s61907:/bin/bash
+s61908:x:1187:504:Branimir Kirilov:/home/SI/s61908:/bin/bash
+s61929:x:1188:504:Desislava Hadzhiiska:/home/SI/s61929:/bin/bash
+s61935:x:1189:504:Nevena Nesheva:/home/SI/s61935:/bin/bash
+s61941:x:1190:504:Vladimir Mihov:/home/SI/s61941:/bin/bash
+s61943:x:1191:504:Atanas Kurtakov:/home/SI/s61943:/bin/bash
+s61947:x:1192:504:Georgi Avramov:/home/SI/s61947:/bin/bash
+s61951:x:1193:504:Ivo Kovachev:/home/SI/s61951:/bin/bash
+s61955:x:1194:504:Aneliq Ivanova:/home/SI/s61955:/bin/bash
+s61956:x:1195:504:Eliq Asenova:/home/SI/s61956:/bin/bash
+s61963:x:1196:504:Zdravko Shehov:/home/SI/s61963:/bin/bash
+s61970:x:1197:504:Dimitar Dimitrov:/home/SI/s61970:/bin/bash
+s855272:x:1198:504:Elvir Maksuti:/home/SI/s855272:/bin/bash
+s81392:x:1199:503:Mihail Markov, KN, 2kurs, 6gr:/home/KN/s81392:/bin/bash
+s855264:x:1200:504:Toni  Dupkarski:/home/SI/s855264:/bin/bash
+s61945:x:1201:504:Stefani Nikolova:/home/SI/s61945:/bin/bash
+s61898:x:1202:504:Georgi Mandadzhiev:/home/SI/s61898:/bin/bash
+s61939:x:1203:504:Bozhidar Marinov:/home/SI/s61939:/bin/bash
+s61810:x:1204:504:Ivan Darpatov:/home/SI/s61810:/bin/bash
+s45043:x:1205:502:Zornica Chopova, Inf, 3kurs, 1gr:/home/Inf/s45043:/bin/bash
+s61799:x:1206:504:Blagoi Anastasov:/home/SI/s61799:/bin/bash
+s61924:x:1207:504:Qvor Qnchev:/home/SI/s61924:/bin/bash
+s61785:x:1208:504:Lili Sotirova, SI, 3kurs, 3gr:/home/SI/s61785:/bin/bash
+s61946:x:1209:504:Simona Tzenova:/home/SI/s61946:/bin/bash
+s855249:x:1210:504:Valentin Muhafel, SI, 3kurs, 1gr:/home/SI/s855249:/bin/bash
+s61815:x:1211:504:Elizabet Pavlova, SI, 3kurs, 3gr:/home/SI/s61815:/bin/bash
+s61911:x:1212:504:Denis Duev, SI, 2, 4:/home/SI/s61911:/bin/bash
+s61899:x:1213:504:Kamen Kanchev, SI, 2, 4:/home/SI/s61899:/bin/bash
+s61859:x:1214:504:Georgi Nikolov:/home/SI/s61859:/bin/bash
+s61909:x:1215:504:Ivan Ivanov:/home/SI/s61909:/bin/bash
+s71473:x:1216:504:Test Testov, SI, 2, 3:/home/SI/s71473:/bin/bash

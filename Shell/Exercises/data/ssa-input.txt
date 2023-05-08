@@ -1,0 +1,125 @@
+
+Smart Array P440ar in Slot 0 (Embedded)
+
+   Array A
+
+      physicaldrive 2I:0:5
+         Port: 2I
+         Box: 0
+         Bay: 5
+         Status: OK
+         Drive Type: Data Drive
+         Interface Type: Solid State SATA
+         Size: 480 GB
+         Drive exposed to OS: False
+         Logical/Physical Block Size: 512/4096
+         Firmware Revision: D3MU001
+         Serial Number: 220735004D2F
+         WWID: 30014380360CDB78
+         Model: ATA     Micron_5300_MTFD
+         SATA NCQ Capable: True
+         SATA NCQ Enabled: True
+         Current Temperature (C): 35
+         Maximum Temperature (C): 36
+         SSD Smart Trip Wearout: Not Supported
+         PHY Count: 1
+         PHY Transfer Rate: 6.0Gbps
+         PHY Physical Link Rate: Unknown
+         PHY Maximum Link Rate: Unknown
+         Drive Authentication Status: Not Applicable
+         Sanitize Erase Supported: True
+         Unrestricted Sanitize Supported: True
+         Shingled Magnetic Recording Support: None
+
+      physicaldrive 2I:0:6
+         Port: 2I
+         Box: 0
+         Bay: 6
+         Status: OK
+         Drive Type: Data Drive
+         Interface Type: Solid State SATA
+         Size: 480 GB
+         Drive exposed to OS: False
+         Logical/Physical Block Size: 512/4096
+         Firmware Revision: D3MU001
+         Serial Number: 220735004AD9
+         WWID: 30014380360CDB79
+         Model: ATA     Micron_5300_MTFD
+         SATA NCQ Capable: True
+         SATA NCQ Enabled: True
+         Current Temperature (C): 34
+         Maximum Temperature (C): 35
+         SSD Smart Trip Wearout: Not Supported
+         PHY Count: 1
+         PHY Transfer Rate: 6.0Gbps
+         PHY Physical Link Rate: Unknown
+         PHY Maximum Link Rate: Unknown
+         Drive Authentication Status: Not Applicable
+         Sanitize Erase Supported: True
+         Unrestricted Sanitize Supported: True
+         Shingled Magnetic Recording Support: None
+
+
+   Array B
+
+      physicaldrive 1I:1:1
+         Port: 1I
+         Box: 1
+         Bay: 1
+         Status: OK
+         Drive Type: Data Drive
+         Interface Type: SATA
+         Size: 10 TB
+         Drive exposed to OS: False
+         Logical/Physical Block Size: 512/4096
+         Rotational Speed: 7200
+         Firmware Revision: SN04
+         Serial Number: ZS518AZW
+         WWID: 30014380360CDB70
+         Model: ATA     ST10000NM001G-2M
+         SATA NCQ Capable: True
+         SATA NCQ Enabled: True
+         Current Temperature (C): 35
+         Maximum Temperature (C): 50
+         PHY Count: 1
+         PHY Transfer Rate: 6.0Gbps
+         PHY Physical Link Rate: Unknown
+         PHY Maximum Link Rate: Unknown
+         Drive Authentication Status: OK
+         Carrier Application Version: 11
+         Carrier Bootloader Version: 6
+         Sanitize Erase Supported: True
+         Unrestricted Sanitize Supported: True
+         Shingled Magnetic Recording Support: None
+
+      physicaldrive 1I:1:2
+         Port: 1I
+         Box: 1
+         Bay: 2
+         Status: OK
+         Drive Type: Data Drive
+         Interface Type: SATA
+         Size: 10 TB
+         Drive exposed to OS: False
+         Logical/Physical Block Size: 512/4096
+         Rotational Speed: 7200
+         Firmware Revision: SN04
+         Serial Number: ZS518AZY
+         WWID: 30014380360CDB71
+         Model: ATA     ST10000NM001G-2M
+         SATA NCQ Capable: True
+         SATA NCQ Enabled: True
+         Current Temperature (C): 35
+         Maximum Temperature (C): 49
+         PHY Count: 1
+         PHY Transfer Rate: 6.0Gbps
+         PHY Physical Link Rate: Unknown
+         PHY Maximum Link Rate: Unknown
+         Drive Authentication Status: OK
+         Carrier Application Version: 11
+         Carrier Bootloader Version: 6
+         Sanitize Erase Supported: True
+         Unrestricted Sanitize Supported: True
+         Shingled Magnetic Recording Support: None
+
+
