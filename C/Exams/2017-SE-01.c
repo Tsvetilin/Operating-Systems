@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
         uint16_t offset;
         uint8_t b1;
         uint8_t b2;
-    }__attribute__((packed));
+    }__attribute__((packed)); // Best possible alignment (i.e. remove padding)
 
     int fd1 = open(f1, O_RDONLY);
     int fd2 = open(f2, O_RDONLY);
