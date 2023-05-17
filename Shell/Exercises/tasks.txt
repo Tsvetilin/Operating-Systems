@@ -1,0 +1,2089 @@
+====== Commands  ======
+
+<--- 02-a-0100 --->
+# Направете копие на файла /etc/passwd във вашата home директория под името my_passwd.
+
+cp /etc/passwd ~/my_passwd
+
+<--- 02-a-0500 --->
+# Направете директория practice-test в home директорията ви. Вътре направете директория test1. Можете ли да направите тези две неща наведнъж? Разгледайте нужната man страница. След това създайте празен файл вътре, който да се казва test.txt, преместете го в practice-test чрез релативни пътища.
+
+mkdir -p ~/practice-test/test1
+touch ~/practice-test/test1/test.txt
+mv ./practice-test/test1/test.txt ./practice-test
+
+<--- 02-a-0600 --->
+#Създайте директорията practice/01 във вашата home директория.
+#Създайте 3 файла в нея - f1, f2, f3.
+#Копирайте файловете f1, f2, f3 от директорията practice/01/ в директория dir1, намираща се във вашата home директория. Ако нямате такава, създайте я.
+
+mkdir -p ~/practice/01
+touch ~/practice/01/f1
+touch ~/practice/01/f2
+touch ~/practice/01/f3
+mkdir -p ~/dir1
+cp ~/practice/01/f1 ~/practice/01/f2 ~/practice/01/f3 ~/dir1
+
+#or
+
+mkdir -p ~/practice/01
+touch ~/practice/01/f{1,2,3}
+mkdir ~/dir1
+cp ~/practice/01/f{1,2,3} ~/dir1/
+
+
+<--- 02-a-0601 --->
+#Нека файлът f2 бъде преместен в директория dir2, намираща се във вашата home директория и бъде преименуван на numbers.
+
+mkdir -p ~/dir2
+mv ~/practice/01/f2 ~/dir2/numbers
+
+<--- 02-a-1200 --->
+#Отпечатайте имената на всички директории в директорията /home.
+
+ls -d /home/*/
+
+#or
+
+find /home -mindepth 1 -maxdepth 1 -type d
+
+
+
+<--- 02-a-4000 --->
+#Създайте файл permissions.txt в home директорията си. За него дайте единствено - read права на потребителя създал файла, write and exec на групата, read and exec на всички останали. Направете го и с битове, и чрез "буквички".
+
+# rwx
+touch ~/permissions.txt
+chmod u=r,g=wx,o=rx ~/permissions.txt
+chmod 435 ~/permissions.txt
+
+
+<--- 02-a-4100 --->
+#За да намерите какво сте правили днес: намерете всички файлове в home директорията ви, които са променени в последния 1 час.
+
+find ~ -type f -mmin -60
+
+#or
+
+find ~ -type f -ctime -1
+
+
+<--- 02-a-5000 --->
+#Копирайте /etc/services в home директорията си. Прочетете го с командата cat. (Ако този файл го няма, прочетете с cat произволен текстов файл напр. /etc/passwd)
+
+cp /etc/services ~/services
+cat ~/services
+
+<--- 02-a-5200 --->
+#Създайте symlink на файла /etc/passwd в home директорията ви (да се казва например passwd_symlink).
+
+ln -s /etc/passwd ~/passwd_symlink
+
+<--- 02-a-5400 --->
+#Изведете всички обикновени ("regular") файлове, които /etc и нейните преки поддиректории съдържат
+
+find /etc -type f -mindepth 1 -maxdepth 2
+
+<--- 02-a-5401 --->
+#Изведете само първите 5 реда от /etc/services
+
+head -n 5 /etc/services
+
+<--- 02-a-5402 --->
+#Изведете всички обикновени ("regular") файлове, които само преките поддиректории на /etc съдържат
+
+find /etc/ -mindepth 2 -maxdepth 2 -type f
+
+
+<--- 02-a-5403 --->
+#Изведете всички преки поддиректории на /etc
+
+find /etc -type d -mindepth 1 -maxdepth 1
+
+<--- 02-a-5500 --->
+#Създайте файл, който да съдържа само последните 10 реда от изхода на 02-a-5403
+
+find /etc/ -mindepth 1 -maxdepth 1 -type d | tail -n 10 > result.txt
+
+# or
+
+find /etc/ -mindepth 1 -maxdepth 1 -type d | tail > result.txt
+
+
+<--- 02-a-5501 --->
+#Изведете обикновените файлове по-големи от 42 байта в home директорията ви
+
+find ~ -type f -size +42c
+
+<--- 02-a-5504 --->
+#Изведете всички обикновени файлове в директорията /tmp които са от вашата група, които имат write права за достъп за група или за останалите(o=w)
+
+find /tmp -group 512 -perm -g=w,o=w
+
+#or
+
+find /tmp/ -type f -group $(id -g) -perm /022 2>/dev/null
+
+
+<--- 02-a-5505 --->
+#Изведете всички файлове, които са по-нови от practice/01/f1 ( би трябвало да е създаден като част от по-ранна задача ).
+
+find ~ -newer practice/01/f1
+
+<--- 02-a-5506 --->
+#Изтрийте файловете в home директорията си по-нови от practice/01/f3
+#(подайте на rm опция -i за да може да изберете само тези които искате да изтриете).
+
+find ~ -newer practice/01/f3 -type f -exec rm -i {} \;
+
+#or
+
+find ~ -newer practice/01/f3 -type f -delete
+
+#or
+
+rm -i $(find ~ -type f -newer practice/01/f3)
+
+#second way it does not ask for confirmation to delete
+
+
+<--- 02-a-6000 --->
+#Намерете файловете в /bin, които могат да се четат, пишат и изпълняват от всички.
+
+find /bin -perm -777
+
+
+<--- 02-a-8000 --->
+#Копирайте всички файлове от /etc, които могат да се четат от всички, в
+#директория myetc в home директорията ви. Направете такава, ако нямате.
+
+mkdir -p ~/myetc
+find /etc/ -perm /u+r,g+r,o+r -exec cp -r {} myetc/ \;
+
+#or
+
+cp -r $(find /etc/ -perm /o+w,g+w,u+w) ~/myetc/
+
+
+
+
+<--- 02-a-9000 --->
+#от предната задача: когато вече сте получили myetc с файлове, архивирайте всички от тях, които започват с 'c' в архив, който се казва c_start.tar
+#изтрийте директорията myetc и цялото и съдържание
+#изтрийте архива c_start.tar
+
+tar -c -f c_start.tar $(find myetc/ -iname 'c*') 
+# or tar -caf c_start.tar.zst /etc/c*
+rm -rf myetc/
+rm -i c_start.tar
+
+<--- 02-a-9500 --->
+#Използвайки едно извикване на командата find, отпечатайте броя на редовете във всеки обикновен файл в /etc директорията.
+
+find /etc/ -type f -exec wc -l {} \;
+#or
+wc -l $(find /etc/ -type f)
+
+
+<--- 02-b-4000 --->
+#Копирайте най-малкия файл от тези, намиращи се в /etc, в home директорията си.
+
+cp $(find /etc/ -type f -exec wc -c {} \; 2> /dev/null | sort -n | head -n 1 | cut -d ' ' -f 2) ~
+
+====== Pipes  ======
+
+<--- 03-a-0200 --->
+#Сортирайте /etc/passwd лексикографски по поле UserID.
+
+cat /etc/passwd | sort -k 3 -t ':'
+
+<--- 03-a-0201 --->
+#Сортирайте /etc/passwd числово по поле UserID.
+#(Открийте разликите с лексикографската сортировка)
+
+cat /etc/passwd | sort -n -k 3 -t ':'
+
+
+<--- 03-a-0210 --->
+#Изведете само 1-ва и 5-та колона на файла /etc/passwd спрямо разделител ":".
+
+ cat /etc/passwd | cut -f 1,5 -d ':'
+
+<--- 03-a-0211 --->
+#Изведете съдържанието на файла /etc/passwd от 2-ри до 6-ти символ.
+
+cat /etc/passwd | cut -c 2-6
+
+<--- 03-a-0212 --->
+#Отпечатайте потребителските имена и техните home директории от /etc/passwd.
+
+cat /etc/passwd | cut -f 1,6 -d ':'| tr ':' ' '
+
+<--- 03-a-0213 --->
+#Отпечатайте втората колона на /etc/passwd, разделена спрямо символ '/'.
+
+cat /etc/passwd | cut -f 2 -d '/'
+
+<--- 03-a-1500 --->
+#Изведете броя на байтовете в /etc/passwd.
+#Изведете броя на символите в /etc/passwd.
+#Изведете броя на редовете  в /etc/passwd.
+
+wc -c /etc/passwd
+wc -m /etc/passwd
+wc -l /etc/passwd
+
+<--- 03-a-2000 --->
+#С отделни команди, извадете от файл /etc/passwd:
+#- първите 12 реда
+#- първите 26 символа
+#- всички редове, освен последните 4
+#- последните 17 реда
+#- 151-я ред (или друг произволен, ако нямате достатъчно редове)
+#- последните 4 символа от 13-ти ред (символът за нов ред не е част от реда)
+
+head /etc/passwd -n 12
+head /etc/passwd -c 26
+head /etc/passwd -n -4
+tail /etc/passwd -n 17
+head /etc/passwd -n 151 | tail -n 1
+head /etc/passwd -n 13 | tail -n 1 | tail -c 5
+
+<--- 03-a-3000 --->
+#Запаметете във файл в своята home директория резултатът от командата `df -P`.
+#Напишете команда, която извежда на екрана съдържанието на този файл, без първия ред (хедъра), сортирано по второ поле (numeric).
+
+df -P > dfp
+cat dfp | tail +2 | sort -k 2 -n
+
+<--- 03-a-3100 --->
+#Запазете само потребителските имена от /etc/passwd във файл users във вашата home директория.
+
+cat /etc/passwd | cut -f 1 -d ':' > ~/users
+
+<--- 03-a-3500 --->
+#Изпишете всички usernames от /etc/passwd с главни букви.
+
+cat /etc/passwd | cut -f 1 -d ':' | tr a-z A-Z > ~/users
+
+<--- 03-a-5000 --->
+#Изведете реда от /etc/passwd, на който има информация за вашия потребител.
+#Изведедете този ред и двата реда преди него.
+#Изведете този ред, двата преди него, и трите след него.
+#Изведете *само* реда, който се намира 2 реда преди реда, съдържащ информация за вашия потребител.
+
+cat /etc/passwd | grep $(id -u)
+cat /etc/passwd | grep $(id -u) -B 2
+cat /etc/passwd | grep $(id -u) -B 2 -A 3
+cat /etc/passwd | grep $(id -u) -B 2 | head -n 1
+
+<--- 03-a-5001 --->
+#Изведете колко потребители не изпозват /bin/bash за login shell според /etc/passwd
+#(hint: 'man 5 passwd' за информация какъв е форматът на /etc/passwd)
+
+cat /etc/passwd | cut -d ':' -f 7 | grep -v '/bin/bash' | wc -l
+
+<--- 03-a-5002 --->
+#Изведете само имената на хората с второ име по-дълго от 6 (>6) символа според /etc/passwd
+
+cat /etc/passwd | cut -d ':' -f 5 | cut -d ' ' -f 2 | cut -d ',' -f 1 | grep -E '.{7,}$'
+
+#or
+
+cut /etc/passwd -d ':' -f5 | cut -d ',' -f1 | egrep ".* .{7,}"
+
+
+<--- 03-a-5003 --->
+#Изведете имената на хората с второ име по-късо от 8 (<=7) символа според /etc/passwd 
+
+cat /etc/passwd | cut -d ':' -f 5 | cut -d ',' -f1 | cut -d ' ' -f2 | grep -v -E '.{8,}$' | grep -E '[^a-zA-Z]' 
+
+#or
+
+cut /etc/passwd -d ':' -f5 | cut -d ',' -f1 | egrep -v ".* .{8,}"
+
+
+<--- 03-a-5004 --->
+#Изведете целите редове от /etc/passwd за хората от 03-a-5003
+cat /etc/passwd | cut -d ':' -f5 | cut -d ',' -f1 | cut -d ' ' -f2 | grep -v -E '.{8,}$' | grep -E '[^a-zA-Z]' | sort | uniq | xargs -I{} grep -w {} /etc/passwd 
+
+
+<--- 03-a-6000 --->
+# Копирайте <РЕПО>/exercises/data/emp.data във вашата home директория.
+cp /srv/fmi-os/exercises/data/emp.data .
+# Посредством awk, използвайки копирания файл за входнни данни, изведете:
+
+# - общия брой редове
+awk 'END{print NR}' emp.data
+#or
+awk 'BEGIN{i=0} {i++} END{print i}' emp.data
+#or
+awk '{i+=1} END{print i}' emp.data
+#or
+cat emp.data | awk 'END{print NR}'
+
+# - третия ред
+awk 'NR==3 {print}' emp.data
+#or
+awk '{if(NR==3) print $0}' emp.data
+
+# - последното поле от всеки ред
+awk '{print $NF}' emp.data
+
+# - последното поле на последния ред
+awk 'END{print $NF}' emp.data
+
+# - всеки ред, който има повече от 4 полета
+awk 'NF > 4 {print}' emp.data
+#or
+awk '{if(NF > 4) print $0}' emp.data
+
+# - всеки ред, чието последно поле е по-голямо от 4
+awk '$NF > 4 {print}' emp.data
+#or
+awk '{if($NF > 4) print $0}' emp.data
+
+# - общия брой полета във всички редове
+awk '{print NF}' emp.data
+
+# - броя редове, в които се среща низът Beth
+awk '/Beth/ {print}' emp.data | awk 'END{print NR}'
+#or
+awk '/.*Beth.*/ {i+=1} END{print i}' emp.data
+
+# - най-голямото трето поле и редът, който го съдържа
+ awk 'BEGIN {max = 0; line = " "} {if ($3 > max) {max = $3; line = $0}} END {printf line" "max"\n"}' emp.data
+
+# - всеки ред, който има поне едно поле
+awk 'NF > 2' emp.data
+#or
+awk '{if(NF > 0) print $0}' emp.data
+
+# - всеки ред, който има повече от 17 знака
+awk 'length($0) > 17' emp.data
+#or
+awk '/.{18,}$/{print $0}' emp.data
+
+# - броя на полетата във всеки ред и самият ред
+awk '{print "fields:" NF "\n" "line:" $0}' emp.data
+
+# - първите две полета от всеки ред, с разменени места
+awk '{print $2 "\t" $1}' data/emp.data
+
+# - всеки ред така, че първите две полета да са с разменени места
+awk '{{temp = $1; $1 = $2; $2 = temp} print}' emp.data
+#or
+awk '{temp = $2; $2 = $1; $1 = temp; print $0}' emp.data
+
+# - всеки ред така, че на мястото на първото поле да има номер на реда
+awk '{{ $1 = NR; } print}' emp.data
+
+# - всеки ред без второто поле
+awk '{for (i = 1; i <= NF; i += 1) if (i!=2) printf "%s ", $i; printf "\n"}' emp.data
+#or
+awk '{$2 = "\t"; print $0}' emp.data
+
+# - за всеки ред, сумата от второ и трето поле
+awk '{sum = $2 + $3; printf "%.2f\n", sum; sum = 0}' emp.data
+#or
+awk '{printf "%.2f\n", $2 + $3}' emp.data
+
+# - сумата на второ и трето поле от всеки ред
+awk 'BEGIN {sum = 0} {sum += $2 + $3} END {print sum}' emp.data
+
+
+<--- 03-b-0300 --->
+#Намерете само Group ID-то си от файлa /etc/passwd.
+
+grep $(id -u) /etc/passwd | cut -d ':' -f4
+#or
+cat /etc/passwd | grep $(whoami) | cut -d ':' -f4
+
+
+<--- 03-b-3400 --->
+#Колко коментара има във файла /etc/services ? Коментарите се маркират със символа #, след който всеки символ на реда се счита за коментар.
+
+cat etc/services | grep "^#" | wc -l
+
+
+<--- 03-b-3500 --->
+#Колко файлове в /bin са 'shell script'-oве?
+find /bin | xargs -I{} file {} | grep "shell script" | wc -l
+#or
+find /bin -type f -exec file {} \; | grep "shell script" | wc -l
+#or
+find /bin -type f -exec cat {} \; | grep "#!/bin/" | wc -l
+
+#(Колко файлове в дадена директория са ASCII text?)
+find /bin | xargs -I{} file {} | grep "ASCII text executable" | wc -l
+
+
+<--- 03-b-3600 --->
+#Направете списък с директориите на вашата файлова система, до които нямате достъп.
+#Понеже файловата система може да е много голяма, търсете до 3 нива на дълбочина.
+
+find / -maxdepth 3 -type d >/dev/null 2> sol.txt; cat sol.txt | cut -d ':' -f 2 | tr -d ' ' | cut -c 4- | rev | cut -c 4- | rev; rm sol.txt
+
+<--- 03-b-4000 --->
+#Създайте следната файлова йерархия в home директорията ви:
+#dir5/file1
+#dir5/file2
+#dir5/file3
+#
+#Посредством vi въведете следното съдържание:
+#file1:
+#1
+#2
+#3
+#
+#file2:
+#s
+#a
+#d
+#f
+#
+#file3:
+#3
+#2
+#1
+#45
+#42
+#14
+#1
+#52
+
+mkdir -p dir5
+echo -e '1\n2\n3' > dir5/f1
+echo -e 's\na\nd\nf' > dir5/f2
+echo -e '3\n2\n1\n45\n42\n14\n1\n52' > dir5/f3
+
+#Изведете на екрана:
+#	* статистика за броя редове, думи и символи за всеки един файл
+printf "lines: $(wc -l  dir5/file1)\n" && printf "words: $(wc -w  dir5/file1)\n" && printf "symbols: $(wc -c  dir5/file1)\n"
+printf "lines: $(wc -l  dir5/file2)\n" && printf "words: $(wc -w  dir5/file2)\n" && printf "symbols: $(wc -c  dir5/file2)\n"
+printf "lines: $(wc -l  dir5/file3)\n" && printf "words: $(wc -w  dir5/file3)\n" && printf "symbols: $(wc -c  dir5/file3)\n"
+# or
+wc dir5/* | head -n -1 
+# or
+wc dir5/f[123] | head -n -1
+
+#	* статистика за броя редове и символи за всички файлове
+printf "lines: $(wc -l dir5/file1)\n" && printf "symbols: $(wc -c  dir5/file1)\n"
+printf "lines: $(wc -l dir5/file2)\n" && printf "symbols: $(wc -c  dir5/file2)\n"
+printf "lines: $(wc -l dir5/file3)\n" && printf "symbols: $(wc -c  dir5/file3)\n"
+#or
+wc -lc dir5/* | head -n -1
+# or
+wc -l -c dir5/f[123] | head -n -1
+
+#	* общия брой редове на трите файла
+wc -l dir5/* | tail -n 1
+# or
+wc -l dir5/f[123] | tail -n 1
+
+<--- 03-b-4001 --->
+#Във file2 (inplace) подменете всички малки букви с главни.
+
+sed -i 's/[a-z]/\U&/g' dir5/file2
+#or
+cat file2 | tr 'a-z' 'A-Z' > file2
+
+
+<--- 03-b-4002 --->
+#Във file3 (inplace) изтрийте всички "1"-ци.
+
+sed -i 's/1//g' dir5/file3
+#or
+cat file3 | tr -d '1' > file3
+
+
+<--- 03-b-4003 --->
+#Изведете статистика за най-често срещаните символи в трите файла.
+
+grep -o '.' dir5/file{1,2,3} | sort | uniq -c | sort -nr
+
+#or
+
+cat file{1,2,3} | sed 's/./&\n/g' | sort | uniq -c | sort -nr
+
+<--- 03-b-4004 --->
+#Направете нов файл с име по ваш избор, чието съдържание е конкатенирани
+#съдържанията на file{1,2,3}.
+
+cat dir5/file1 dir5/file2 dir5/file3 > temp.txt
+# or
+cat dir5/file[123] > temp.txt
+# or
+cat dir5/file{1,2,3} > temp.txt
+
+<--- 03-b-4005 --->
+#Прочетете текстов файл file1 и направете всички главни букви малки като
+#запишете резултата във file2.
+
+sed 's/[A-Z]/\L&/g' dir5/file1 > dir5/file2
+
+#or
+
+cat dir5/file1 | tr A-Z a-z > dir5/file2
+
+
+<--- 03-b-5200 --->
+#Намерете броя на символите, различни от буквата 'а' във файла /etc/passwd
+
+grep -o "." /etc/passwd | grep -v "a|а" | sort | uniq -c | sort -nr
+
+#or
+
+cat /etc/passwd | sed 's/а//g' | wc -m
+
+
+<--- 03-b-5300 --->
+#Намерете броя на уникалните символи, използвани в имената на потребителите от
+#/etc/passwd.
+
+cat /etc/passwd | cut -d ':' -f5 | cut -d ',' -f1 | grep -o . | sort -u | wc -l
+
+# or
+
+cat /etc/passwd | cut -d ':' -f5 | cut -d ',' -f1 | sed 's/./&\n/g' | sort | uniq | wc -l
+
+<--- 03-b-5400 --->
+#Отпечатайте всички редове на файла /etc/passwd, които не съдържат символния низ 'ов'.
+
+grep -v "ов" /etc/passwd
+
+
+<--- 03-b-6100 --->
+#Отпечатайте последната цифра на UID на всички редове между 28-ми и 46-ред в /etc/passwd.
+
+cat /etc/passwd | head -n 46 | tail -n 28 | cut -d ':' -f 3 | egrep -o '.$'
+#or
+cat /etc/passwd | head -n 46 | tail -n 28 | cut -d ':' -f 3 | rev | cut -c 1 
+#or
+cat /etc/passwd | head -n 46 | tail -n 28 | cut -d ':' -f 3 | sed 's/.*\(.\)$/\1/g'
+
+
+<--- 03-b-6700 --->
+#Отпечатайте правата (permissions) и имената на всички файлове, до които имате
+#read достъп, намиращи се в директорията /tmp. (hint: 'man find', вижте -readable)
+
+find /tmp/ -readable 2>/dev/null -printf "%m %f\n"
+
+
+<--- 03-b-6900 --->
+#Намерете имената на 10-те файла във вашата home директория, чието съдържание е
+#редактирано най-скоро. На първо място трябва да бъде най-скоро редактираният
+#файл.
+find ~ -printf "%T@ %f\n" | sort -k 1nr -t ' ' | cut -d ' ' -f2 | head -n 10
+
+#Намерете 10-те най-скоро достъпени файлове. (hint: Unix time)
+find ~ -printf "%A@ %f\n" | sort -k 1nr -t ' ' | cut -d ' ' -f2 | head -n 10
+
+
+
+<--- 03-b-7000 --->
+#да приемем, че файловете, които съдържат C код, завършват на `.c` или `.h`.
+#Колко на брой са те в директорията `/usr/include`?
+#Колко реда C код има в тези файлове?
+
+find /usr/include -name '*.[ch]' |  wc -l
+cat $(find /usr/include -name '*.[ch]') |  wc -l
+
+
+
+<--- 03-b-7500 --->
+#Даден ви е ASCII текстов файл - /etc/services. Отпечатайте хистограма на 10-те най-често срещани думи.
+#Дума наричаме непразна последователност от букви. Не правим разлика между главни и малки букви.
+#Хистограма наричаме поредица от редове, всеки от които има вида:
+#<брой срещания> <какво се среща толкова пъти>
+
+cat /etc/services | grep -o '[a-zA-Z]*' | tr [A-Z] [a-z] | sort | uniq -c | sort -nr | head
+
+
+<--- 03-b-8000 --->
+#Вземете факултетните номера на студентите (описани във файла
+#<РЕПО>/exercises/data/mypasswd.txt) от СИ и ги запишете във файл si.txt сортирани.
+#
+#Студент е част от СИ, ако home директорията на този потребител (според
+#<РЕПО>/exercises/data/mypasswd.txt) се намира в /home/SI директорията.
+
+cp /srv/fmi-os/exercises/data/mypasswd.txt .
+cat mypasswd.txt | grep "/home/SI" |cut -d ':' -f1 | cut -c 2- | grep -v "[a-zA-Z]" | sort -nr > si.txt 
+
+
+<--- 03-b-8500 --->
+#За всяка група от /etc/group изпишете "Hello, <група>", като ако това е вашата група, напишете "Hello, <група> - I am here!".
+
+cat /etc/group | cut -d ':' -f 1 | sed -E 's/^.*$/Hello, &/'
+#or
+cat /etc/group | awk -F ':' '{print "Hello, " $1}'
+
+<--- 03-b-8600 --->
+# Shell Script-овете са файлове, които по конвенция имат разширение .sh. Всеки
+# такъв файл започва с "#!<interpreter>" , където <interpreter> указва на
+# операционната система какъв интерпретатор да пусне (пр: "#!/bin/bash",
+# "#!/usr/bin/python3 -u").
+
+# Намерете всички .sh файлове в директорията `/usr` и нейните поддиректории, и
+# проверете кой е най-често използваният интерпретатор.
+ 
+find /usr/ -iname "*.sh" | xargs -I{} head -n 1 {} | grep "^#!" | tr -d " " | sort | uniq -c | sort -nr | head -n 1 | cut -d '!' -f2
+
+#or
+
+find /usr/ -iname '*.sh' -exec head -n 1 {} \; | grep "^#!" | cut -d "!" -f 2 | sort | uniq -c | sort -nr | head -n 1 | awk '{print $2}'
+
+
+<--- 03-b-8700 --->
+#1. Изведете GID-овете на 5-те най-големи групи спрямо броя потребители, за които
+#съответната група е основна (primary).
+#
+#2. (*) Изведете имената на съответните групи.
+#
+#Hint: /etc/passwd
+
+cat /etc/passwd | cut -d ':' -f4 | sort -n | uniq -c | sort -nr | head -n 5 | awk '{print $2}' | xargs -I{} getent group {} | cut -d ':' -f1
+
+#or 
+
+cat /etc/passwd | cut -d ':' -f4 | sort -n | uniq -c | sort -nr | head -n 5 | awk '{print $2}' | xargs -I{} grep ':{}:' /etc/group | cut -d ':' -f 1
+
+#or
+
+cat /etc/passwd | cut -d ':' -f4 | sort -n | uniq -c | sort -nr | head -n 5 | awk '{print $NF}' | xargs -I{} grep ':{}:' /etc/group | awk -F ':' '{print $3 " " $1}'
+
+
+<--- 03-b-9000 --->
+#Направете файл eternity. Намерете всички файлове, намиращи се във вашата home
+#директория и нейните поддиректории, които са били модифицирани в последните
+#15мин (по възможност изключете .).  Запишете във eternity името (път) на
+#файла и времето (unix time) на последната промяна.
+
+touch eternity
+find ~ -type f -mmin -15 ! -name ".*" -printf "%p %A@\n" > eternity
+
+
+<--- 03-b-9051 --->
+#Използвайки файл population.csv, намерете колко е общото население на света
+#през 2008 година. А през 2016?
+
+cat population.csv | egrep ",2008," | awk -F ',' '{sum += $NF} END{print sum}'
+cat population.csv | egrep ",2016," | awk -F ',' '{sum += $NF} END{print sum}'
+
+#or
+
+cat population.csv | awk -F ',' 'BEGIN {counter = 0} $3==2008 {counter+=$4} END {print counter}'
+
+#or
+
+cat population.csv | awk -F ',' 'BEGIN {counter = 0} $(NF-1)==2008 {counter+=$(NF)} END {print counter}'
+
+#or
+
+cat population.csv | egrep ",2008," | cut -d ',' -f 4 | sed 's/.*/+ &/g' | xargs | tail -c +3 | bc
+
+<--- 03-b-9052 --->
+# Използвайки файл population.csv, намерете през коя година в България има най-много население.
+
+grep "BGR" population.csv | sort -k4nr -t ',' | head -n 1 |cut -d ',' -f3
+
+#or
+
+cat population.csv | egrep 'Bulgaria' | sort -r -n -k 4 -t ',' | head -n 1 | cut -d ',' -f 3
+
+#or
+
+cat population.csv | awk -F ',' 'BEGIN{year=0; max=0} $(NF-2)=="BGR"{if(max<$(NF)){max=$NF; year=$(NF-1)}} END{print year}'
+
+<--- 03-b-9053 --->
+#Използвайки файл population.csv, намерете коя държава има най-много население през 2016.
+grep ",2016," population.csv | cut -d '"' -f3 | sort -k 4n -t ',' | tail -n 1 | cut -d ',' -f2 | xargs -I{} grep {} population.csv | head -n 1 | rev | cut -d ',' -f4 | rev | tr -d '"'
+
+# А коя е с най-малко население?
+grep ",2016," population.csv | cut -d '"' -f3 | sort -k 4n -t ',' | head -n 1 | cut -d ',' -f2 | xargs -I{} grep {} population.csv | head -n 1 | rev | cut -d ',' -f4 | rev | tr -d '"'
+
+#or
+
+cat population.csv | grep ",2016," | awk -F ',' '{print $0 ": " $NF}' | sort -k 2 -n -r -t ':' | cut -d ':' -f1 | awk -F ',' '{for (i=1; i < NF-2;i++) {printf "%s, ", $i;} printf "\n"}'| sed 's/"//g' | sed -E 's/(.*),/\1/g' | head -n 1
+
+#(Hint: Погледнете имената на държавите)
+
+
+
+<--- 03-b-9054 --->
+#Използвайки файл population.csv, намерете коя държава е на 42-ро място по
+#население през 1969. Колко е населението й през тази година?
+
+cat population.csv | egrep ",1969," | awk -F ',' '{print $0 ": " $(NF)}' | sort -t ':' -k2n | cut -d ':' -f1 |head -n 42 | tail -n 1| awk -F ',' '{for (i=1; i< (NF-2);i+=1) printf "%s,", $i} {print " " $(NF)}'
+
+
+
+<--- 03-b-9100. --->
+#В home директорията си изпълнете командата
+curl -o songs.tar.gz "http://fangorn.uni-sofia.bg/misc/songs.tar.gz"
+
+
+<--- 03-b-9101 --->
+#Да се разархивира архивът songs.tar.gz в директория songs във вашата home директория.
+
+mkdir ~/songs
+tar -xf ~/songs.tar.gz -C ~/songs
+
+
+#Универсален sed за архива по колони: 1-папка, 2-група, 3-песен, 4-албум, 5-година, 6-разширение
+find songs -iname '*.ogg' | sed -E 's/(.*)\/(.*) - (.*)\((.*), (.*)\).(.*)/\3/g'
+
+<--- 03-b-9102 --->
+#Да се изведат само имената на песните.
+
+find songs -mindepth 1 | cut -d '-' -f2 | cut -c 2- | cut -d '(' -f1
+
+#or
+
+find songs -iname '*.ogg' | sed -E 's/.*- (.*)\(.*/\1/g'
+
+#or
+
+find songs -mindepth 1 -printf "%f\n" | sed -E 's/.* - (.*) \(.*/\1/g'
+
+
+<--- 03-b-9103 --->
+#Имената на песните да се направят с малки букви, да се заменят спейсовете с
+#долни черти и да се сортират.
+
+find songs -mindepth 1| cut -d '-' -f2 | cut -c 2- | cut -d '(' -f1 | tr A-Z a-z | tr ' ' '_' | sort
+
+#or
+
+find songs -iname '*.ogg' | sed -E 's/(.*)\/(.*) - (.*) \((.*), (.*)\).(.*)/\3/g' | sed -E 's/[A-Z]/\L&/g' | sed -E 's/ /_/g' | sort
+
+#or
+
+find songs -mindepth 1 -printf "%f\n" | sed -E 's/.* - (.*) \(.*/\1/g' | sed -E 's/[A-Z]/\L&/g' | sed -E 's/ /_/g' | sort
+
+
+
+<--- 03-b-9104 --->
+#Да се изведат всички албуми, сортирани по година.
+
+find songs -mindepth 1| cut -d '-' -f2 | cut -c 2- | cut -d '(' -f2 | cut -d ')' -f1 | sort -k 2n -t ',' | uniq | cut -d ',' -f1
+
+#or
+
+find songs -mindepth 1 -printf "%f\n" | sed -E 's/.*\((.*)\).*/\1/g' | sort -k2n -t ','
+
+
+
+<--- 03-b-9105 --->
+# Да се преброят/изведат само песните на Beatles и Pink.
+
+find songs | grep -E "Pink -|Beatles -" | cut -d '/' -f2 | sort | wc -l
+
+#or
+
+find songs -mindepth 1 -printf "%f\n" | awk -F '-' '{if ($1 == "Pink ") print $0} {if ($1 == "Beatles ") print $0}'
+
+
+
+<--- 03-b-9106 --->
+#Да се направят директории с имената на уникалните групи. За улеснение, имената
+#от две думи да се напишат слято:
+#
+#Beatles, PinkFloyd, Madness
+
+find songs -mindepth 1 | cut -d '-' -f1 | cut -d '/' -f2 | sort | uniq | tr -d ' ' | xargs -I{} mkdir {}
+
+#or
+
+find songs -mindepth 1 -printf "%f\n" | awk -F '-' '{print $1}' | sort | uniq | tr -d ' ' | xargs -I{} mkdir "{}"
+
+
+
+<--- 03-b-9200 --->
+#Напишете серия от команди, които извеждат детайли за файловете и директориите в
+#текущата директория, които имат същите права за достъп както най-големият файл
+#в /etc директорията.
+
+find ~ -perm $(find /etc/ -type f -printf "%s %m\n" 2>/dev/null | sort -nr | head -n1 | cut -d ' ' -f2)
+
+
+<--- 03-b-9300 --->
+#Дадени са ви 2 списъка с email адреси - първият има 12 валидни адреса, а
+#вторията има само невалидни. Филтрирайте всички адреси, така че да останат
+#само валидните. Колко кратък регулярен израз можете да направите за целта?
+#
+#Валидни email адреси (12 на брой):
+#email@example.com
+#firstname.lastname@example.com
+#email@subdomain.example.com
+#email@123.123.123.123
+#1234567890@example.com
+#email@example-one.com
+#_______@example.com
+#email@example.name
+#email@example.museum
+#email@example.co.jp
+#firstname-lastname@example.com
+#unusually.long.long.name@example.com
+#
+#Невалидни email адреси:
+##@%^%#$@#$@#.com
+#@example.com
+#myemail
+#Joe Smith <email@example.com>
+#email.example.com
+#email@example@example.com
+#.email@example.com
+#email.@example.com
+#email..email@example.com
+#email@-example.com
+#email@example..com
+#Abc..123@example.com
+#(),:;<>[\]@example.com
+#just"not"right@example.com
+#this\ is"really"not\allowed@example.com
+
+
+cat emails.txt | grep '^[_0-9a-zA-Z][a-zA-Z0-9_.-]*[a-zA-Z0-9_]@[a-z0-9A-Z][a-zA-Z0-9_.-]*.[a-zA-Z]*$' | grep -v '.*[.][.].*'
+
+<--- 03-b-9400 --->
+#Посредством awk, използвайки emp.data (от 03-a-6000.txt) за входнни данни,
+#изведете:
+#
+#- всеки ред, като полетата са в обратен ред
+#
+#(Разгледайте for цикли в awk)
+
+cat emp.data | awk '{for (i=NF;i>=1;i-=1) printf "%s\t", $i} {printf "\n"}'
+
+
+<--- 03-b-9500 --->
+#Копирайте <РЕПО>/exercises/data/ssa-input.txt във вашата home директория.
+#Общият вид на файла е:
+#
+#- заглавна част:
+#	Smart Array P440ar in Slot 0 (Embedded)
+#
+#- една или повече секции за масиви:
+#	Array A
+#	Array B
+#	...
+#	като буквата (A, B, ...) е името на масива
+#
+#- във всяка таква секция има една или повече подсекции за дискове:
+#	physicaldrive 2I:0:5
+#	physicaldrive 2I:0:6
+#	...
+#
+#	като 2I:0:5 е името на диска
+#
+#- във всяка подсекция за диск има множество параметри във вида:
+#	key name: value
+#	като за нас са интересни само:
+#
+#		Current Temperature (C): 35
+#		Maximum Temperature (C): 36
+#
+#Напишете поредица от команди която обработва файл в този формат, и генерира
+#следният изход:
+#
+#A-2I:0:5 35 36
+#A-2I:0:6 34 35
+#B-1I:1:1 35 50
+#B-1I:1:2 35 49
+#
+#x-yyyyyy zz ww
+#
+#където:
+#	- x е името на масива
+#	- yyyyyy е името на диска
+#	- zz е current temperature
+#	- ww е max temperature
+
+cp /srv/fmi-os/exercises/data/ssa-input.txt ~
+cat ssa-input.txt | awk '{if ($1=="Array") array = $2} {if ($1=="physicaldrive") drive = $2} {if ($2=="Temperature" && $1=="Current") ct = $4;} {if  ($2=="Temperature" && $1=="Maximum") {mt = $4; printf "%s-%s %s %s",array,drive,ct,mt; printf"\n"}}'
+
+
+====== Processes  ======
+
+<--- 04-a-5000 --->
+#Намерете командите на 10-те най-стари процеси в системата.
+
+ps -e --sort=etimes -o cmd | tail -n 10
+
+<--- 04-a-6000 --->
+#Намерете PID и командата на процеса, който заема най-много виртуална памет в системата.
+
+ps -e -o pid=,args=,vsz= --sort=vsz | tail -n 1
+
+<--- 04-a-6300 --->
+#Изведете командата на най-стария процес
+
+ps -e -o comm= --sort=etimes | tail -n 1
+
+<--- 04-b-5000 --->
+#Намерете колко физическа памет заемат всички процеси на потребителската група root.
+
+ps -e -g root -o rss= | awk '{sum+=$1} END {print sum}'
+
+#or
+
+ps -e -g root -o rss= |sed -E 's/.*/+ &/g' | xargs | tail -c +3 | bc
+
+#or
+
+ps -A -o egroup,drs | grep "^root" | awk '{sum+=$NF} END{print sum}'
+
+
+<--- 04-b-6100 --->
+# Изведете имената на потребителите, които имат поне 2 процеса, чиято команда е vim (независимо какви са аргументите й)
+
+ps -A -o user,cmd | grep "vim" | awk '{print $1}' | sort | uniq -c | awk '{for (i=NF;i>=1;i--) printf "%s\t",$i; printf "\n"}' | awk '{if ($2>=2) print $0}'
+
+
+<--- 04-b-6200 --->
+#Изведете имената на потребителите, които не са логнати в момента, но имат живи процеси
+
+comm -1 -3 <(who | cut -d ' ' -f 1 | sort -u ) <(ps -e -o user= | sort -u)
+
+#or
+
+ps -e -o user= | grep -Fvf <(who | cut -d ' ' -f 1 | sort -u) | sort | uniq
+
+<--- 04-b-7000 --->
+#Намерете колко физическа памет заемат осреднено всички процеси на потребителската група root. Внимавайте, когато групата няма нито един процес.
+
+ps -A -o drs,group | awk '{if ($2=="root") print $1}' | awk '{sum += $1; counter += 1;} END{if (counter > 0) print (sum/counter); else print "0"}'
+
+
+<--- 04-b-8000 --->
+#Намерете всички PID и техните команди (без аргументите), които нямат tty, което ги управлява. Изведете списък само с командите без повторения.
+
+ps -A -o pid,tty,cmd | awk '{if ($2 =="?") {print $3}}' | sort -u
+
+
+<--- 04-b-9000 --->
+#Да се отпечатат PID на всички процеси, които имат повече деца от родителския си процес.
+
+ps -A -o pid,ppid | awk '{parent[$1]=$2;children[$2]++;} END{for (child in children) {if (children[child] > children[parent[child]]) print child}}'
+
+
+====== Scripts  ======
+
+<--- 05-a-2000 --->
+PS1='enter command:'
+PS1='\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+
+#Сменете вашия prompt с нещо по желание. После върнете оригиналния обратно.
+
+<--- 05-a-2100 --->
+name=$(egrep "^$(whoami)" /etc/passwd | awk -F ':' '{print $5}' | awk '{print $1}')
+echo "Hello, ${name}"
+
+#Редактирайте вашия .bash_profile файл, за да ви поздравява
+#(или да изпълнява някаква команда по ваш избор) всеки път, когато влезете в системата.
+
+<--- 05-b-2000 --->
+#!/bin/bash
+
+read -p "Enter your name: " name
+echo "Hello, ${name}"
+
+#Да се напише shell скрипт, който приканва потребителя да въведе низ (име) и изпечатва "Hello, низ".
+
+<--- 05-b-2800 --->
+#!/bin/bash
+
+# v1
+if [[ $# -ne 1 ]] ; then
+        echo "Invalid number of arguments"
+        exit 1
+fi
+
+if [[ ! $1 =~ ^[a-zA-Z0-9]+$ ]] ; then
+        echo "Invalid input"
+        exit 2
+fi
+
+echo "yes"
+
+# v2
+if [[ ${#} -ne 1 ]] ; then
+        echo "1 argument expected"
+        exit 1
+fi
+
+if echo "${1}" | grep -q -E '^[a-zA-Z0-9]*$' ; then
+        echo "yes"
+else
+        echo "no"
+fi
+
+#v3
+grep -q -E -v '^[a-zA-Z0-9]*$' <(echo "${1}")
+echo "${?}"
+
+#Да се напише shell скрипт, който приема точно един параметър и проверява дали подаденият му параметър
+#се състои само от букви и цифри.
+
+<--- 05-b-3100 --->
+#!/bin/bash
+
+read -p "Enter username: " username
+
+if ! grep -q "${username}" /etc/passwd ; then
+        echo "No such username exists"
+        exit 1
+fi
+
+echo "Active sessions: " $(who | grep "${username}" | wc -l)
+
+#Да се напише shell скрипт, който приканва потребителя да въведе низ - потребителско име на потребител от
+#системата - след което извежда на стандартния изход колко активни сесии има потребителят в момента.
+
+<--- 05-b-3200 --->
+#!/bin/bash
+
+#v1
+if [[ ${#} -ne 1 ]] ; then
+        echo "Expected 1 argument - folder path"
+        exit 1
+fi
+
+if [[ ! -d ${1} ]] ; then
+        echo "Invalid folder path"
+        exit 1
+fi
+
+
+filesCount=$(find "${1}" -mindepth 1 -type f 2>&1 | wc -l)
+directoriesCount=$(find "${1}" -mindepth 1 -type d 2>&1 | wc -l)
+
+echo "Files: ${filesCount}"
+echo "Directories: ${directoriesCount}"
+echo Total count: $((filesCount + directoriesCount))
+
+#v2
+
+read -p "Enter directory name: " dirName
+
+if [[ ! -d ${dirName} ]] ; then
+        echo "Directory does not exist"
+        exit 1
+fi
+
+filesCount=$(find "${dirName}" -mindepth 1 -type f | wc -l)
+directoriesCount=$(find "${dirName}" -mindepth 1 -type d | wc -l)
+
+echo "Files: ${filesCount}"
+echo "Directories: ${directoriesCount}"
+
+#Да се напише shell скрипт, който приканва потребителя да въведе пълното име на директория и извежда на стандартния
+#изход подходящо съобщение за броя на всички файлове и всички директории в нея.
+
+<--- 05-b-3300 --->
+#Да се напише shell скрипт, който чете от стандартния вход имената на 3 файла,
+#обединява редовете на първите два (man paste), подрежда ги по азбучен ред и
+#резултата записва в третия файл.
+
+#!/bin/bash
+
+if [[ ! -f ${file1} ]]; then
+  echo "${file1} is not found"
+elif  [[ ! -f ${file2} ]]; then
+  echo "${file2} is not found"
+elif  [[ ! -f ${file2} ]]; then
+  echo"${file3} is not found"
+fi
+
+$(paste file1 file2 | sort > ${file3})
+cat "${file3}"
+
+<--- 05-b-3400 --->
+#!/bin/bash
+
+if [[ $# -lt 2 ]] ; then
+        echo "Expected 2 arguments"
+        exit 1
+fi
+
+fileName=$1
+shift
+
+word=$@
+
+grep -q "${word}" ${fileName}
+status=$?
+
+if [[ ${status} == 0 ]] ; then
+        echo "${fileName} contains ${word}"
+else
+        echo "${fileName} does not contain ${word}"
+fi
+
+#Да се напише shell скрипт, който чете от стандартния вход име на файл и символен низ, проверява дали низа се съдържа
+#във файла и извежда на стандартния изход кода на завършване на командата с която сте проверили наличието на низа.
+#
+#NB! Символният низ може да съдържа интервал (' ') в себе си.
+
+<--- 05-b-4200 --->
+#!/bin/bash
+
+if [[ $# -ne 1 ]] ; then
+        echo "Expected one argument"
+        exit 1
+fi
+
+max=0
+currentCount=0
+
+while read ch; do
+        if [[ ${ch} == "{" ]] ; then
+                currentCount=$(( currentCount + 1 ))
+        else
+
+                if [[ max -lt currentCount ]] ; then
+                    max=${currentCount}
+                fi
+
+                currentCount=$(( currentCount - 1 ))
+        fi
+
+done < <( cat "${1}" | grep -E -o '[{}]' )
+
+echo "Deepest nesting: ${max}"
+
+#Имате компилируем (a.k.a няма синтактични грешки) source file на езика C. Напишете shell script, който да покaзва
+#колко е дълбоко най-дълбокото nest-ване (влагане).
+#Примерен .c файл:
+#
+##include <stdio.h>
+#
+#int main(int argc, char *argv[]) {
+#
+#  if (argc == 1) {
+#		printf("There is only 1 argument");
+#	} else {
+#		printf("There are more than 1 arguments");
+#	}
+#
+#	return 0;
+#}
+#Тук влагането е 2, понеже имаме main блок, а вътре в него if блок.
+#
+#Примерно извикване на скрипта:
+#
+#./count_nesting sum_c_code.c
+#
+#Изход:
+#The deepest nesting is 2 levels deep.
+
+<--- 05-b-4301 --->
+#!/bin/bash
+
+if [[ $# -ne 3 ]] ; then
+        echo "Expected 3 arguments"
+        exit 1
+fi
+
+fileName=${1}
+fullName=${2}
+nickName=${3}
+
+userName=$(grep "${fullName}" /etc/passwd | awk -F ':' '{print $1}')
+candidates=$(echo "${userName}" | wc -l)
+
+if [[ ${userName} == "" ]] ; then
+        echo "User not found"
+        exit 1
+fi
+
+if [[ ${candidates} -gt 1 ]] ; then
+        index=1
+        while read line ; do
+                echo "${index}.${line}"
+                arr[index]=${line}
+                index=$(( index + 1 ))
+        done < <(echo "${userName}")
+        echo "0.Exit"
+        read -p "Choose from 1-${candidates}: " choice
+        if [[ ${choice} -lt 0 ]] || [[ ${choice} -gt ${candidates} ]] ; then
+                echo "Invalid choice"
+                exit 1
+        else
+                if [[ ${choice} -eq 0 ]] ; then
+                        exit 0
+                else
+                        userName=${arr[${choice}]}
+                fi
+        fi
+fi
+
+echo "${nickName} ${userName}" >> ${fileName}
+
+#Напишете shell script, който автоматично да попълва файла указател от предната задача по подадени аргументи:
+#име на файла указател, пълно име на човека (това, което очакваме да е в /etc/passwd) и избран за него nickname.
+#Файлът указател нека да е във формат:
+#<nickname, който лесно да запомните> <username в os-server>
+#// може да сложите и друг delimiter вместо интервал
+#
+#Примерно извикване:
+#./pupulate_address_book myAddressBook "Ben Dover" uncleBen
+#
+#Добавя към myAddressBook entry-то:
+#uncleBen <username на Ben Dover в os-server>
+#
+#***Бонус: Ако има няколко съвпадения за въведеното име (напр. има 10 човека Ivan Petrov в /etc/passwd),
+#всички те да се показват на потребителя, заедно с пореден номер >=1,
+#след което той да може да въведе някой от номерата (или 0 ако не си хареса никого), и само избраният да бъде добавен
+#към указателя.
+
+<--- 05-b-4400 --->
+#!/bin/bash
+
+if [[ ${#} -lt 1 ]] ; then
+        echo "Expected at least one arg - dir"
+        exit 1
+fi
+
+if [[ ${#} -gt 2 ]] ; then
+        echo "No more than 2 args"
+        exit 2
+fi
+
+if [[ ! -d ${1} ]] ; then
+        echo "Expected dir"
+        exit 3
+fi
+
+OUTPUT=$(date -I)
+
+if [[ ${#} -eq 2 ]] ; then
+        OUTPUT=${2}
+fi
+
+if [[ ! -d ${destDir} ]] ; then
+        mkdir -p ${OUTPUT}
+fi
+
+for FILE in $(find ${1} -mindepth 1 -maxdepth 1 -type f -mmin -45) ; do
+        cp ${FILE} ${OUTPUT}
+done
+
+#or
+
+cp -r $(find ${FILE} -mindepth 1 -maxdepth 1 -mmin -45) ${OUTPUT}
+
+tar -cf arhive.tar ${OUTPUT}
+
+#Напишете shell script, който да приема параметър име на директория, от която взимаме файлове, и опционално експлицитно
+#име на директория, в която ще копираме файлове. Скриптът да копира файловете със съдържание, променено преди по-малко
+#от 45 мин, от първата директория във втората директория. Ако втората директория не е подадена по име, нека да получи
+#такова от днешната дата във формат, който ви е удобен. При желание новосъздадената директория да се архивира.
+
+
+<--- 05-b-4500 --->
+#!/bin/bash
+
+if [[ ${#} -ne 1 ]] ; then
+        echo "Expected 1 argument - user id"
+        exit 1
+fi
+
+if ! ( cat /etc/passwd | grep -q "${1}" ) ; then
+        echo "User ${1} does not exists"
+        exit 2
+fi
+# or
+#
+#if ! id "${1}" &> /dev/null ; then
+#        echo "Invalid user id"
+#        exit 2
+#fi
+
+echo "Waiting for user ${1} to log in"
+
+while true ; do
+        if who | grep -q "${1}" ; then
+                echo "User ${1} is logged in"
+                exit 0
+        fi
+
+        sleep 1
+done
+
+#v2
+
+userName=${1}
+
+egrep -q "${userName}" /etc/passwd
+isUserExisting=${?}
+
+if [[ ${isUserExisting} -ne 0 ]] ; then
+        echo "User not existing"
+        exit 2
+fi
+
+who | egrep -q "^${userName}"
+isLogged=${?}
+
+if [[ ${isLogged} -eq 0 ]] ; then
+        echo "${userName} is logged"
+else
+        while true ; do
+                echo "Waiting for user to log in"
+                who | egrep -q "^${userName}"
+                isLogged=${?}
+                if [[ ${isLogged} -eq 0 ]] ; then
+                        echo "${userName} is logged"
+                        exit 0
+                fi
+                sleep 1
+        done
+fi
+
+#Да се напише shell скрипт, който получава при стартиране като параметър в командния ред идентификатор на потребител.
+#Скриптът периодично (sleep(1)) да проверява дали потребителят е log-нат, и ако да - да прекратява изпълнението си,
+#извеждайки на стандартния изход подходящо съобщение.
+
+<--- 05-b-4600 --->
+#!/bin/bash
+
+if [[ ${#} -ne 3 ]] ; then
+        echo "Expected 3 arguments"
+        exit 4
+fi
+
+for arg in "${@}" ; do
+        if ! ( echo "${arg}" | grep -q -E '^(-){0,1}[0-9]+$' ) ; then
+                echo "Invalid number"
+                exit 3
+        fi
+done
+
+if [[ ${3} -lt ${2} ]] ; then
+        echo "Invalid interval"
+        exit 2
+fi
+
+if [[ ${1} -ge ${2} && ${1} -le ${3} ]] ; then
+        echo "Number is in interval"
+        exit 0
+else
+        echo "Number is not in interval"
+        exit 1
+fi
+
+#Да се напише shell скрипт, който валидира дали дадено цяло число попада в целочислен интервал.
+#Скриптът приема 3 аргумента: числото, което трябва да се провери; лява граница на интервала; дясна граница на интервала.
+#Скриптът да връща exit status:
+#- 4, когато броят на аргументите е различен от 3
+#- 3, когато поне един от трите аргумента не е цяло число
+#- 2, когато границите на интервала са обърнати
+#- 1, когато числото не попада в интервала
+#- 0, когато числото попада в интервала
+
+
+<--- 05-b-4700 --->
+#!/bin/bash
+
+separator=' '
+
+if [[ ${#} -lt 1 ]] || [[ ${#} -gt 2 ]] ; then
+        echo "Expected #1 argument - number"
+        echo "Optional #2 argument - separator"
+        exit 1
+fi
+
+if [[ ${#} -eq 2 ]] ; then
+
+    if echo ${2} | grep -E -q '^.$' ; then
+        separator=${2}
+    else
+        echo "Single character separator expected"
+        exit 2
+    fi
+fi
+
+if ! ( echo ${1} | grep -q -E '^(-){0,1}[0-9]+$' ) ; then
+        echo "Invalid number"
+        exit 2
+fi
+
+echo $(echo "${1}" | rev | sed -E 's/(.)/\1\n/g' | awk -v separator="${separator}" 'BEGIN {counter = 0;} {counter++; printf $0} counter%3==0{printf separator}' | rev | sed -E 's/^'${separator}'//g')
+
+#v2
+
+if [[ $# -eq 0 ]] ; then
+        echo "Expected at least 1 argument"
+        exit 1
+fi
+
+if [[ $# -gt 2 ]] ; then
+        echo "Expected #1 argument - number"
+        echo "Optional #2 argument - separator"
+        exit 1
+fi
+
+number=${1}
+
+echo "${number}" | egrep -q "^(-){0,1}[0-9]+$"
+if [[ ${?} -ne 0 ]] ; then
+        echo "${number} is not integer"
+        exit 1
+fi
+
+separator=" "
+
+if [[ $# -eq 2 ]] ; then
+        separator="${2}"
+fi
+
+if [[ $(echo "${separator}" | egrep -o "." | wc -l) -ne 1 ]] ; then
+        echo "Separator should be 1 character"
+        exit 1
+fi
+
+number=$(echo "${number}" | egrep -o ".")
+
+length=$(echo "${number}" | wc -l)
+counter=$(( length % 3 ))
+counter=$(( 3 - counter ))
+
+while read digit ; do
+        counter=$(( counter + 1 ))
+        length=$(( length - 1 ))
+        printf "%s" "${digit}"
+        if [[ $(( counter % 3 )) -eq 0 ]] && [[ ${length} -ne 0 ]] ; then
+                printf "%s" "${separator}"
+        fi
+done < <(echo "${number}")
+printf "\n"
+
+
+#Да се напише shell скрипт, който форматира големи числа, за да са по-лесни за четене.
+#Като пръв аргумент на скрипта се подава цяло число.
+#Като втори незадължителен аргумент се подава разделител. По подразбиране цифрите се разделят с празен интервал.
+
+<--- 05-b-4800 --->
+#!/bin/bash
+
+if [[ $# -ne 2 ]] ; then
+        echo "Expected 2 arguments - file and directory"
+        exit 1
+fi
+
+file=${1}
+directory=${2}
+
+for FILE in $(find ${directory} -type f) ; do
+        diff -q ${file} ${FILE} > /dev/null
+        if [[ ${?} -eq 0 ]] ; then
+                echo "${FILE}"
+        fi
+done
+
+
+#Да се напише shell скрипт, който приема файл и директория. Скриптът проверява в подадената директория и нейните
+#под-директории дали съществува копие на подадения файл и отпечатва имената на намерените копия, ако съществуват такива.
+#
+#NB! Под 'копие' разбираме файл със същото съдържание.
+
+
+<--- 05-b-5500 --->
+#!/bin/bash
+
+users=$(who | awk '{print $1}' | sort -u)
+
+echo "<table>"
+echo "  <tr>"
+echo "    <th>Username</th>"
+echo "    <th>group</th>"
+echo "    <th>login shell</th>"
+echo "    <th>GECOS</th>"
+echo "  </tr>"
+while read username ; do
+        echo "  <tr>"
+        groupId=$(egrep "^${username}" /etc/passwd | awk -F ':' '{print $4}')
+        group=$(egrep "${groupId}:$" /etc/group | awk -F ':' '{print $1}')
+        loginShell=$(egrep "^${username}" /etc/passwd | awk -F ':' '{print $NF}')
+        fullName=$(egrep "^${username}" /etc/passwd | awk -F ':' '{print $5}' | awk -F ',' '{print $1}')
+        echo "    <td>${username}</td>"
+        echo "    <td>${group}</td>"
+        echo "    <td>${loginShell}</td>"
+        echo "    <td>${fullName}</td>"
+        echo "  </tr>"
+done < <(echo "${users}")
+echo "</table>"
+
+#Да се напише shell script, който генерира HTML таблица съдържаща описание на
+#потребителите във виртуалката ви. Таблицата трябва да има:
+#- заглавен ред с имената нa колоните
+#- колони за username, group, login shell, GECOS field (https://en.wikipedia.org/wiki/Gecos_field)
+#
+#Пример:
+#$ ./passwd-to-html.sh > table.html
+#$ cat table.html
+#<table>
+#  <tr>
+#    <th>Username</th>
+#    <th>group</th>
+#    <th>login shell</th>
+#    <th>GECOS</th>
+#  </tr>
+#  <tr>
+#    <td>root</td>
+#    <td>root</td>
+#    <td>/bin/bash</td>
+#    <td>GECOS here</td>
+#  </tr>
+#  <tr>
+#    <td>ubuntu</td>
+#    <td>ubuntu</td>
+#    <td>/bin/dash</td>
+#    <td>GECOS 2</td>
+#  </tr>
+#</table>
+
+<--- 05-b-6600 --->
+#!/bin/bash
+
+if [[ $# -ne 1 ]] ; then
+        echo "Expected 1 argument - directory"
+        exit 1
+fi
+
+if [[ ! -d ${1} ]] ; then
+        echo "Expected 1 argument - directory"
+        exit 1
+fi
+
+for file in $(find "${1}" -mindepth 1 -maxdepth 1 -type f) ; do
+        if [[ -f "${file}" ]] ; then
+                for FILE in $(find "${1}" -mindepth 1 -maxdepth 1 -type f) ; do
+                        if [[ -f "${FILE}" ]]&& [[ -f "${file}" ]] && [[ "${file}" != "${FILE}" ]] ; then
+                                diff -q "${file}" "${FILE}" >/dev/null
+                                if [[ ${?} -eq 0 ]] ; then
+                                        if [[ "${file}" > "${FILE}" ]] ; then
+                                                rm "${file}"
+                                        else
+                                                rm "${FILE}"
+                                        fi
+                                fi
+                        fi
+                done
+        fi
+done
+
+#Да се напише shell скрипт, който получава единствен аргумент директория и изтрива всички повтарящи се
+#(по съдържание) файлове в дадената директория. Когато има няколко еднакви файла, да се остави само този,
+#чието име е лексикографски преди имената на останалите дублирани файлове.
+#
+#Примери:
+#$ ls .
+#f1 f2 f3 asdf asdf2
+## asdf и asdf2 са еднакви по съдържание, но f1, f2, f3 са уникални
+#
+#$ ./rmdup .
+#$ ls .
+#f1 f2 f3 asdf
+## asdf2 е изтрит
+
+<--- 05-b-6800 --->
+#!/bin/bash
+
+if [[ ${#} -le 1 || ${#} -gt 2 ]] ; then
+        echo "Expected 1st arg -> dir name"
+        echo "Optional 2nd arg: -a"
+        exit 1
+fi
+
+if [[ ! -d ${1} ]] ; then
+        echo "Not a directory"
+        exit 2
+fi
+
+for file in $(find ${1} -mindepth 1 -maxdepth 1) ; do
+        if [[ -d ${file} ]] ; then
+                echo "${file} ($(find ${file} -mindepth 1 -maxdepth 1 | wc -l) entries)"
+        elif [[ -f ${file} ]] ; then
+                echo "${file} ($(stat -c "%s" ${file})b size)"
+        fi
+done
+
+#Да се напише shell скрипт, който получава единствен аргумент директория и отпечатва списък с всички файлове и
+#директории в нея (без скритите).
+#До името на всеки файл да седи размера му в байтове, а до името на всяка директория да седи броят на елементите в нея
+#(общ брой на файловете и директориите, без скритите).
+#
+#a) Добавете параметър -a, който указва на скрипта да проверява и скритите файлове и директории.
+#
+#Пример:
+#$ ./list.sh .
+#asdf.txt (250 bytes)
+#Documents (15 entries)
+#empty (0 entries)
+#junk (1 entry)
+#karh-pishtov.txt (8995979 bytes)
+#scripts (10 entries)
+
+<--- 05-b-7000 --->
+#!/bin/bash
+
+read -p "String: " string
+
+while [ ${#} -ne 0 ] ; do
+        FILE=${1}
+        shift
+        echo "${FILE} - occurances: $(cat ${FILE} | grep -F "${string}" | wc -l)"
+done
+
+#Да се напише shell скрипт, който приема произволен брой аргументи - имена на файлове.
+#Скриптът да прочита от стандартния вход символен низ и за всеки от зададените файлове извежда
+#по подходящ начин на стандартния изход броя на редовете, които съдържат низа.
+#
+#NB! Низът може да съдържа интервал.
+
+<--- 05-b-7100 --->
+#!/bin/bash
+
+if [[ $# -ne 2 ]] ; then
+        echo "Expected 2 arguments - directory and number"
+        exit 1
+fi
+
+if [[ ! -d "${1}" ]] ; then
+        echo "First argument is not a directory"
+        exit 1
+fi
+
+echo "${2}" | egrep -q "^[0-9]+$"
+if [[ ${?} -ne 0 ]] ; then
+        echo "Second argument is not an integer"
+        exit 1
+fi
+
+for file in $(find ${1} -mindepth 1 -maxdepth 1 -type f) ; do
+        fileSize=$(stat -c "%s" ${file})
+        if [[ ${fileSize} -gt ${2} ]] ; then
+                echo "${file}"
+        fi
+done
+
+#or
+
+find ${1} -mindepth 1 -maxdepth 1 -type f -size +${2}c
+
+#Да се напише shell скрипт, който приема два параметъра - име на директория и число.
+#Скриптът да извежда на стандартния изход имената на всички обикновени файлове във директорията,
+#които имат размер, по-голям от подаденото число.
+
+
+<--- 05-b-7200 --->
+#!/bin/bash
+
+while [ ${#} -ne 0 ] ; do
+        FILE=${1}
+        shift
+        if [[ -f ${FILE} ]] ; then
+                if [[ -r ${FILE} ]] ; then
+                        echo "${FILE} is readable"
+                else
+                        echo "${FILE} is not readable"
+                fi
+        elif [[ -d ${FILE} ]] ; then
+                echo "${FILE} is a directory"
+                echo "Files in ${FILE}:"
+                find "${FILE}" -mindepth 1 -type f -size $(find ${FILE} -mindepth 1 -maxdepth 1 | wc -l)
+        else
+                echo "${FILE} is not a file or directory"
+        fi
+done
+
+#Да се напише shell скрипт, който приема произволен брой аргументи - имена на файлове или директории.
+#Скриптът да извежда за всеки аргумент подходящо съобщение:
+#	- дали е файл, който може да прочетем
+#	- ако е директория - имената на файловете в нея, които имат размер, по-малък от броя на файловете в директорията.
+
+<--- 05-b-7500 --->
+#!/bin/bash
+
+counter=0
+
+read -p "Enter interval for the number: " a b
+
+if [[ ${a} -gt ${b} ]] ; then
+        echo "Invalid interval"
+        exit 1
+fi
+
+randomNumber=$(( (RANDOM % b) + a ))
+
+while true; do
+        counter=$(( counter + 1 ))
+        read -p "Enter your guess: " guess
+        if [[ ${guess} -lt ${a} ]] || [[ ${guess} -gt ${b} ]] ; then
+                echo "Your guess is out of interval"
+        elif [[ ${guess} -eq ${randomNumber} ]] ; then
+                echo "Congrats, you guessed in ${counter} attempts"
+                exit 0
+        elif [[ ${guess} -lt ${randomNumber} ]] ; then
+                echo "Higher"
+        else
+                echo "Lower"
+        fi
+done
+
+#Напишете shell script guess, която си намисля число, което вие трябва да познате. В зависимост от вашия отговор,
+#програмата трябва да ви казва "надолу" или "нагоре", докато не познате числото.
+#Когато го познаете, програмата да ви казва с колко опита сте успели.
+#
+#./guess (програмата си намисля 5)
+#
+#Guess? 22
+#...smaller!
+#Guess? 1
+#...bigger!
+#Guess? 4
+#...bigger!
+#Guess? 6
+#...smaller!
+#Guess? 5
+#RIGHT! Guessed 5 in 5 tries!
+#
+#Hint: Един начин да направите рандъм число е с $(( (RANDOM % b) + a  )), което ще генерира число в интервала [a, b].
+#Може да вземете a и b като параметри, но не забравяйте да направите проверката.
+
+
+<--- 05-b-7550 --->
+#!/bin/bash
+
+if [[ $# -ne 1 ]] ; then
+        echo "Expected 1 argument - username"
+        exit 1
+fi
+
+ps -A -o user,pid,time,tty,cmd | grep "${1}"
+
+pkill -u "${1}"
+
+#Да се напише shell скрипт, който приема параметър - име на потребител. Скриптът да прекратява изпълненито на всички
+#текущо работещи процеси на дадения потребител, и да извежда колко са били те.
+#
+#NB! Може да тествате по същият начин като описаният в 05-b-4300
+
+
+<--- 05-b-7800 --->
+#!/bin/bash
+
+if [[ $# -ne 1 ]] || [[ ! -d ${1} ]]; then
+        echo "Expected 1 argument - directory"
+        exit 1
+fi
+
+counter=0
+
+for file in $(find ${1} -mindepth 1 -maxdepth 1 -type f) ; do
+        if [[ -x ${file} ]] ; then
+                counter=$(( counter + 1 ))
+        fi
+done
+
+echo "${counter}"
+
+#Да се напише shell скрипт, който намира броя на изпълнимите файлове в PATH.
+#Hint: Предполага се, че няма спейсове в имената на директориите
+#Hint2: Ако все пак искаме да се справим с този случай, да се разгледа IFS променливата и констуркцията while read -d
+
+
+<--- 05-b-8000 --->
+#!/bin/bash
+
+if [[ $# -ne 1 ]] ; then
+        echo "Expected 1 argument - user name"
+        exit 1
+fi
+
+username=$(grep "${1}" /etc/passwd | awk -F ':' '{print $1}')
+
+ps -A -o user,pid,tty,pid,rss,vsz --sort -vsz | grep "^${username}" | awk '{print $5/$6}'
+
+#Напишете shell script, който получава като единствен аргумент име на потребител и за всеки негов процес изписва
+#съобщение за съотношението на RSS към VSZ. Съобщенията да са сортирани, като процесите с най-много заета виртуална
+#памет са най-отгоре.
+#
+#Hint:
+#Понеже в Bash няма аритметика с плаваща запетая, за смятането на съотношението използвайте командата bc.
+#За да сметнем нампример 24/7, можем да: echo "scale=2; 24/7" | bc
+#Резултатът е 3.42 и има 2 знака след десетичната точка, защото scale=2.
+#Алтернативно, при липса на bc ползвайте awk.
+
+
+<--- 05-b-9100 --->
+#!/bin/bash
+
+if [[ $# -ne 2 ]] ; then
+        echo "Expected 2 arguments:"
+        echo "Source directory"
+        echo "Destination directory"
+        exit 1
+fi
+
+source="${1}"
+destination="${2}"
+
+if [[ ! -d "${source}" ]] ; then
+        echo "Source directory does not exist"
+        exit 1
+fi
+
+if [[ ! -d "${destination}" ]] ; then
+        mkdir "${destination}"
+fi
+
+for file in $(find "${source}" -mindepth 1 -type f) ; do
+        extension=$(echo "${file}" | awk -F '.' '{print $NF}')
+        echo "${destination}/${extenstion}"
+        if [[ ! -d "${destination}/${extension}" ]] ; then
+                echo "Make"
+                mkdir "${destination}/${extension}"
+        fi
+        cp "${file}" "${destination}/${extension}"
+done
+
+#Опишете поредица от команди или напишете shell скрипт, които/който при известни две директории SOURCE и DESTINATION:
+#- намира уникалните "разширения" на всички файлове, намиращи се някъде под SOURCE. (За простота приемаме,
+#че в имената на файловете може да се среща символът точка '.' максимум веднъж.)
+#- за всяко "разширение" създава по една поддиректория на DESTINATION със същото име
+#- разпределя спрямо "разширението" всички файлове от SOURCE в съответните поддиректории в DESTINATION
+
+<--- 05-b-9200 --->
+#!/bin/bash
+
+rec=1
+
+if [[ "${1}" == "-r" ]] ; then
+        rec=0
+        shift
+fi
+
+while [[ $# -ne 0 ]] ; do
+        file="${1}"
+        currentDate=$(date +'%Y-%m-%d %H:%M:%S')
+        if [[ -f "${file}" ]] ; then
+                echo "[${currentDate}] Removed file ${file}"
+                rm ${file}
+        elif [[ -d "${file}" ]] ; then
+                filesCount=$(find "${file}" -mindepth 1 | wc -l)
+                if [[ ${filesCount} -eq 0 ]] ; then
+                        echo "[${currentDate}] Removed directory ${file}"
+                        rmdir ${file}
+                else
+                        if [[ ${rec} -eq 0 ]] ; then
+                                echo "[${currentDate}] Removed directory recursively ${file}"
+                                rm -rf ${file}
+                        fi
+                fi
+        fi
+        shift
+done
+
+#Да се напише shell скрипт, който получава произволен брой аргументи файлове, които изтрива.
+#Ако бъде подадена празна директория, тя бива изтрита. Ако подадения файл е директория с поне 1 файл, тя не се изтрива.
+#За всеки изтрит файл (директория) скриптът добавя ред във log файл с подходящо съобщение.
+#
+#а) Името на log файла да се чете от shell environment променлива, която сте конфигурирали във вашия .bashrc.
+#б) Добавете параметър -r на скрипта, който позволява да се изтриват непразни директории рекурсивно.
+#в) Добавете timestamp на log съобщенията във формата: 2018-05-01 22:51:36
+#
+#Примери:
+#$ export RMLOG_FILE=~/logs/remove.log
+#$ ./rmlog -r f1 f2 f3 mydir/ emptydir/
+#$ cat $RMLOG_FILE
+#[2018-04-01 13:12:00] Removed file f1
+#[2018-04-01 13:12:00] Removed file f2
+#[2018-04-01 13:12:00] Removed file f3
+#[2018-04-01 13:12:00] Removed directory recursively mydir/
+#[2018-04-01 13:12:00] Removed directory emptydir/
+
+
+<--- 05-b-9500 --->
+#!/bin/bash
+
+if [[ $# -gt 2 ]] || [[ $# -lt 1 ]] ; then
+        echo "Expected 2 arguments - color and string"
+        exit 1
+fi
+
+if [[ $# -eq 1 ]] ; then
+        echo "${1}"
+        exit 0
+fi
+
+color="${1}"
+shift
+
+if [[ ${color} == "-r" ]] ; then
+        echo -e "\033[0;31m${@}"
+elif [[ ${color} == "-g" ]] ; then
+        echo -e "\033[0;32m${@}"
+elif [[ ${color} == "-b" ]] ; then
+        echo -e "\033[0;34m${@}"
+else
+        echo "Unknown color"
+fi
+
+echo -e '\033[0m'
+
+#(Цветно принтиране) Напишете shell script color_print, който взима два параметъра.
+#
+#Първият може да е измежду "-r", "-g" "-b", а вторият е произволен string.
+#На командата "echo" може да се подаде код на цвят, който ще оцвети текста в определения цвят.
+#В зависимост от първия аргумент, изпринтете втория аргумен в определения цвят:
+#
+#"-r" е червено. Кодът на червеното е '\033[0;31m' (echo -e "\033[0;31m This is red")
+#"-g" е зелено. Кодът на зеленото е '\033[0;32m' (echo -e "\033[0;32m This is green")
+#"-b" е синьо. Кодът на синьото е '\033[0;34m' (echo -e "\033[0;34m This is blue")
+#Ако е подадена друга буква изпишете "Unknown colour",
+#а ако изобщо не е подаден аргумент за цвят, просто изпишете текста.
+#
+#Hint:
+#
+#В края на скрипта си напишете:
+#echo -e '\033[0m'
+#,за да не се прецакат цветовете на терминала. Това е цветът на "няма цвят".
+
+
+<--- 05-b-9501 --->
+#!/bin/bash
+
+if [[ $# -ne 1 ]] ; then
+        echo "Expected 1 argument - color"
+        exit 1
+fi
+
+color="${1}"
+index=x
+
+if [[ ${color} == "-r" ]] ; then
+        index=0
+elif [[ ${color} == "-g" ]] ; then
+        index=1
+elif [[ ${color} == "-b" ]] ; then
+        index=2
+elif [[ ${color} != "-x" ]] ; then
+        echo "Unknown color"
+        exit 1
+fi
+
+while true ; do
+        echo -e "\033[0m"
+        read -p "Enter string: " str
+        if [[ ${str} == "exit" ]] ; then
+                echo -e '\033[0m'
+                exit 0
+        fi
+        while read line ; do
+                if [[ ${index} == "x" ]] ; then
+                        echo -e "\033[0m${line}"
+                elif [[ $(( index % 3 )) -eq 0 ]] ; then
+                        echo -e "\033[0;31m${line}"
+                elif [[ $(( index % 3 )) -eq 1 ]] ; then
+                        echo -e "\033[0;32m${line}"
+                elif [[ $(( index % 3 )) -eq 2 ]] ; then
+                        echo -e "\033[0;34m${line}"
+                fi
+                if [[ ${index} != "x" ]] ; then
+                        index=$(( index + 1 ))
+                fi
+        done < <(cat ${str})
+done
+
+echo -e '\033[0m'
+
+#Този път програмата ви ще приема само един параметър, който е измежду ("-r", "-b", "-g", "-x").
+#Напишете shell script, който приема редовете от stdin и ги изпринтва всеки ред с редуващ се цвят.
+#Цветовете вървят RED-GREEN-BLUE и цветът на първия ред се определя от аргумента.
+#Ако е подаден аргумент "-x", то не трябва да променяте цветовете в терминала
+#(т.е., все едно сте извикали командата cat).
+#
+#Hint: Не забравяйте да връщате цветовете в терминала.
+
+<--- 05-b-9600 --->
+#!/bin/bash
+
+rec=1
+
+if [[ "${1}" == "-r" ]] ; then
+        rec=0
+        shift
+fi
+
+while [[ $# -ne 0 ]] ; do
+        file="${1}"
+        currentDate=$(date +'%Y-%m-%d-%H-%M-%S')
+        if [[ -f "${file}" ]] ; then
+                echo "[${currentDate}] Removed file ${file}"
+                tar -czf "${BACKUP_DIR}/${file}_${currentDate}.gz" "${file}"
+                rm ${file}
+        elif [[ -d "${file}" ]] ; then
+                        dirName=$(echo "${file}" | sed -E 's/(.*)\//\1/g')
+                filesCount=$(find "${file}" -mindepth 1 | wc -l)
+                if [[ ${filesCount} -eq 0 ]] ; then
+                        echo "[${currentDate}] Removed directory ${file}"
+                        tar -czf "${BACKUP_DIR}/${dirName}_${currentDate}.tgz" "${file}"
+                        rmdir ${file}
+                else
+                        if [[ ${rec} -eq 0 ]] ; then
+                                echo "[${currentDate}] Removed directory recursively ${file}"
+                                tar -czf "${BACKUP_DIR}/${dirName}_${currentDate}.tgz" "${file}"
+                                rm -rf ${file}
+                        else
+                                echo "error: ${file} is not empty, will not detele"
+                        fi
+                fi
+        fi
+        shift
+done
+
+#Да се напише shell скрипт, който получава произволен брой аргументи файлове, които изтрива.
+#Ако бъде подадена празна директория, тя бива изтрита. Ако подадения файл е директория с поне 1 файл, тя не се изтрива.
+#
+#Да се дефинира променлива BACKUP_DIR (или друго име), в която:
+#- изтритите файлове се компресират и запазват
+#- изтритите директории се архивират, комприсират и запазват
+#- имената на файловете е "filename_yyyy-mm-dd-HH-MM-SS.{gz,tgz}", където filename е оригиналното име на файла
+#(директорията) преди да бъде изтрит
+#
+#а) Добавете параметър -r на скрипта, който позволява да се изтриват непразни директории рекурсивно и съответно
+#да се запазят в BACKUP_DIR
+#
+#Примери:
+#$ export BACKUP_DIR=~/.backup/
+#
+## full-dir/ има файлове и не може да бъде изтрита без параметър -r
+#$ ./trash f1 f2 full-dir/ empty-dir/
+#error: full-dir/ is not empty, will not detele
+#$ ls $BACKUP_DIR
+#f1_2018-05-07-18-04-36.gz
+#f2_2018-05-07-18-04-36.gz
+#empty-dir_2018-05-07-18-04-36.tgz
+#
+#$ ./trash -r full-dir/
+#
+#$ ls $BACKUP_DIR
+#f1_2018-05-07-18-04-36.gz
+#f2_2018-05-07-18-04-36.gz
+#full-dir_2018-05-07-18-04-50.tgz
+#empty-dir_2018-05-07-18-04-36.tgz
+#
+## можем да имаме няколко изтрити файла, които се казват по един и същ начин
+#$ ./trash somedir/f1
+#
+#$ ls $BACKUP_DIR
+#f1_2018-05-07-18-04-36.gz
+#f1_2018-05-07-18-06-01.gz
+#f2_2018-05-07-18-04-36.gz
+#full-dir_2018-05-07-18-04-50.tgz
+#empty-dir_2018-05-07-18-04-36.tgz
+
