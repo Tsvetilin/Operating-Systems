@@ -39,4 +39,4 @@ int main(int argc, char** argv) {
     dprintf(1, "Files %s has:\nLines: %d\nWords: %d\nCharacters: %d\n", file_name, lines, words, chars);
 }
 
-//Реализирайте команда wc, с един аргумент подаден като входен параметър
+//Реализирайте команда wc, с един аргумент подаден като входен параметър.
