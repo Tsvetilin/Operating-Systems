@@ -4,12 +4,12 @@ All task statements in [os-problems.pdf](<./os-problems.pdf>)
 
 |Task no.|Task id|Solution|
 |---|---|---|
-|56|2016-SE-01|[Solution](<.2016-SE-01.c>)|
-|57|2016-SE-02|[Solution](<.2016-SE-02.c>)|
+|56|2016-SE-01|[Solution](<./2016-SE-01.c>)|
+|57|2016-SE-02|[Solution](<./2016-SE-02.c>)|
 |58|2016-SE-03|MISSING|
 |59|2017-IN-01|MISSING|
-|60|2017-SE-01|[Solution](<.2017-SE-01.c>)|
-|61|2017-SE-02|[Solution](<.2017-SE-02.c>)|
+|60|2017-SE-01|[Solution](<./2017-SE-01.c>)|
+|61|2017-SE-02|[Solution](<./2017-SE-02.c>)|
 |62|2017-SE-03|MISSING|
 |63|2017-SE-04|MISSING|
 |64|2018-SE-01|MISSING|
@@ -26,8 +26,8 @@ All task statements in [os-problems.pdf](<./os-problems.pdf>)
 |75|2022-IN-01|MISSING|
 |76|2022-SE-01|MISSING|
 |77|2023-IN-01|MISSING|
-|78|2016-SE-01|[Solution](<.2016-SE-01.c>)|
-|79|2016-SE-02|[Solution](<.2016-SE-02.c>)|
+|78|2016-SE-01|[Solution](<./2016-SE-01.c>)|
+|79|2016-SE-02|[Solution](<./2016-SE-02.c>)|
 |80|2017-IN-01|MISSING|
 |81|2017-IN-02|MISSING|
 |82|2018-SE-01|MISSING|
