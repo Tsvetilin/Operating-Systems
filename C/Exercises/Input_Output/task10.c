@@ -3,9 +3,17 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <err.h>
+#include <errno.h>
 #include <stdint.h>
 #include <string.h>
 #include <sys/stat.h>
+
+void close_safe(int fd);
+void close_safe(int fd) {
+    int errno_ = errno;
+    close(fd);
+    errno = errno_;
+}
 
 int main(int argc, char** argv) {
     if (argc != 3) {
@@ -45,6 +53,7 @@ int main(int argc, char** argv) {
     if (strcmp(option, min) == 0) {
         unsigned char minByte;
         if (read(fd, &minByte, sizeof(minByte)) == -1) {
+            close_safe(fd);
             err(5, "Error while reading from file %s", file_name);
         }
         while ((bytes_count = read(fd, &byte, sizeof(byte))) == sizeof(byte)) {
@@ -68,10 +77,11 @@ int main(int argc, char** argv) {
     }
 
     if (bytes_count == -1) {
+        close_safe(fd);
         err(4, "Error while reading from %s", file_name);
     }
 
-    close(fd);
+    close_safe(fd);
     exit(0);
 }
 

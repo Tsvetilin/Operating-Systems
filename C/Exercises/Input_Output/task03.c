@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <err.h>
+#include <errno.h>
 #include <stdint.h>
 #include <unistd.h>
 
@@ -33,10 +34,15 @@ int main(int argc, char** argv) {
     }
 
     if (bytes_counter == -1) {
+        int errno_ = errno;
+        close(fd);
+        errno = errno_;
         err(3, "Error while reading from file %s", file_name);
     }
 
+    close(fd);
     dprintf(1, "Files %s has:\nLines: %d\nWords: %d\nCharacters: %d\n", file_name, lines, words, chars);
+    exit(0);
 }
 
 //Реализирайте команда wc, с един аргумент подаден като входен параметър.

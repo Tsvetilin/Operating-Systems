@@ -6,12 +6,16 @@
 #include <fcntl.h>
 
 void write_safe(int fd, char c, int size, const char* file_name);
+void close_safe(int fd);
 
+void close_safe(int fd) {
+    int errno_ = errno;
+    close(fd);
+    errno = errno_;
+}
 void write_safe(int fd, char c, int size, const char* file_name) {
     if (( write(fd, &c, size)) != size) {
-        int errno_ = errno;
-        close(fd);
-        errno = errno_;
+        close_safe(fd);
         err(2, "Error while writing in file %s", file_name);
     }
 }
@@ -32,9 +36,7 @@ int main(int argc, char** argv) {
         }
 
         if (bytes_count == -1) {
-            int errno_ = errno;
-            close(fd);
-            errno = errno_;
+            close_safe(fd);
             err(3, "Error while reading from file %s", file_name);
         }
 
@@ -46,4 +48,5 @@ int main(int argc, char** argv) {
     exit(0);
 }
 
-//Реализирайте команда cp, работеща с произволен брой подадени входни параметри.
+
+//Реализирайте команда cat, работеща с произволен брой подадени входни параметри.

@@ -4,6 +4,22 @@
 #include <err.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <stdint.h>
+
+const uint8_t files_count = 2;
+int fds[2] = {0, 0};
+
+void close_all(void);
+void close_all(void) {
+    int errno_ = errno;
+    for (int i = 0; i < files_count; i++) {
+        if (fds[i] >= 0) {
+            close(fds[i]);
+        }
+    }
+
+    errno = errno_;
+}
 
 int main(void) {
     const char* etc = "/etc/passwd";
@@ -16,9 +32,7 @@ int main(void) {
     }
 
     if ((fd2 = open(copy, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU)) == -1) {
-        int errno_ = errno;
-        close(fd1);
-        errno = errno_;
+        close_all();
         err(2, "Error while opening file %s", copy);
     }
 
@@ -30,21 +44,17 @@ int main(void) {
         }
 
         if ((write(fd2, &c, sizeof(c))) != sizeof(c)) {
-            int errno_ = errno;
-            close(fd1);
-            close(fd2);
-            errno = errno_;
+            close_all();
             err(3, "Error while writing in file %s", copy);
         }
     }
 
     if (bytes_count == -1) {
+        close_all();
         err(4, "Error while reading from file %s", etc);
     }
 
-    close(fd1);
-    close(fd2);
-
+    close_all();
     exit(0);
 }
 

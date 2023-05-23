@@ -1,11 +1,20 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <err.h>
+#include <errno.h>
 #include <stdint.h>
 #include <string.h>
 #include <sys/stat.h>
+
+void close_safe(int fd);
+void close_safe(int fd) {
+    int errno_ = errno;
+    close(fd);
+    errno = errno_;
+}
 
 int main(int argc, char** argv) {
     if (argc != 3) {
@@ -45,6 +54,7 @@ int main(int argc, char** argv) {
     if (strcmp(option, min) == 0) {
         uint16_t minN;
         if (read(fd, &minN, sizeof(minN)) == -1) {
+            close_safe(fd);
             err(5, "Error while reading from file %s", file_name);
         }
         while ((bytes_count = read(fd, &number, sizeof(number))) == sizeof(number)) {
@@ -68,12 +78,14 @@ int main(int argc, char** argv) {
     }
 
     if (bytes_count == -1) {
+        close_safe(fd);
         err(4, "Error while reading from %s", file_name);
     }
 
-    close(fd);
+    close_safe(fd);
     exit(0);
 }
+
 
 //Напишете програма, която приема точно 2 аргумента. Първият може да бъде само --min, --max или --print
 //(вижте man 3 strcmp). Вторият аргумент е двоичен файл, в който има записани цели неотрицателни двубайтови числа
