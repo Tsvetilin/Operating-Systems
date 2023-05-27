@@ -26,6 +26,7 @@ int main(int argc, char** argv) {
     }
 
     const char* str = argv[1];
+    int str_size = strlen(str);
     pid_t child = fork();
 
     if (child == -1) {
@@ -45,7 +46,7 @@ int main(int argc, char** argv) {
 
         if (bytes_count == -1) {
             close_safe(pf[0]);
-            err(5, "Error while reading from strin");
+            err(5, "Error while reading from stdin");
         }
 
         close_safe(pf[0]);
@@ -53,7 +54,7 @@ int main(int argc, char** argv) {
     }
 
     close_safe(pf[0]);
-    if (write(pf[1], str, strlen(str)) != strlen(str)) {
+    if (write(pf[1], str, str_size) != str_size) {
         close_safe(pf[1]);
         err(4, "Error while writing to stdin");
     }
