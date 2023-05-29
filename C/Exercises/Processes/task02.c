@@ -11,9 +11,8 @@ int main (int argc, char** argv) {
 
     if (execlp("/bin/ls", "ls", argv[1], 0) == -1) {
         err(1, "err execling");
-    } else {
-        dprintf(1, "foobar\n");
-    }
+    } 
+    
 }
 
 //T2 - Да се напише програма на C, която изпълнява команда ls с точно един аргумент.
