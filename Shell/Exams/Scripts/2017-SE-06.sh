@@ -10,7 +10,7 @@ root_processes=$(ps -u 0 -o uid,pid,rss )
 
 while read uid pid rss ; do
     root_sum=$(( root_sum + rss ))
-done < <(ps -e -o uid,pid,rss | egrep -v "^[ ]*0.*")
+done < <(echo "${root_processes}")
 
 while read username id homedir; do
     if [[ ! -d ${homedir} ]] || [[ $(stat -c "%U" ${homedir}) != ${username} ]] || [[ $(stat -c "%a" ${homedir} | cut -c 1) -lt 4 ]] ; then
