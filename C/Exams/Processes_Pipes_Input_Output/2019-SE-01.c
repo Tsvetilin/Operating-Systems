@@ -93,6 +93,7 @@ int main(int argc, char** argv) {
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <fcntl.h>
+#include <errno.h>
 
 typedef struct triplet {
     time_t start_time;
@@ -100,10 +101,16 @@ typedef struct triplet {
     int exit_code;
 } triplet;
 
+void close_safe(int fd);
 void validate_interval(const char* str);
 void write_safe(int fd, const triplet tr);
 bool check_condition(const triplet first, const triplet second, int ttl);
 triplet execute_command(int fd, const char* command, char** args);
+void close_safe(int fd) {
+    int errno_ = errno;
+    close(fd);
+    errno = errno_;
+}
 
 bool check_condition(const triplet first, const triplet second, int ttl) {
     return ((first.end_time - first.start_time) < ttl && (second.end_time - second.start_time) < ttl) &&
@@ -112,6 +119,7 @@ bool check_condition(const triplet first, const triplet second, int ttl) {
 
 void write_safe(int fd, const triplet tr) {
     if (write(fd, &tr, sizeof(triplet)) != sizeof(triplet)) {
+        close_safe(fd);
         err(129, "Could not write to file");
     }
 }
@@ -132,6 +140,7 @@ triplet execute_command(int fd, const char* command, char** args) {
     tr.start_time = time(NULL);
     int status;
     if (wait(&status) == -1) {
+        close_safe(fd);
         err(129, "Could not wait for child process");
     }
     tr.end_time = time(NULL);
