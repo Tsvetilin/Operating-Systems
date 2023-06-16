@@ -82,6 +82,7 @@ int main(int argc, char** argv) {
 
 //v2
 
+
 #include <stdlib.h>
 #include <unistd.h>
 #include <err.h>
@@ -105,7 +106,7 @@ bool check_condition(const triplet first, const triplet second, int ttl);
 triplet execute_command(int fd, const char* command, char** args);
 
 bool check_condition(const triplet first, const triplet second, int ttl) {
-    return ((first.end_time - first.start_time) < ttl && (second.end_time - second.start_time) < ttl) ||
+    return ((first.end_time - first.start_time) < ttl && (second.end_time - second.start_time) < ttl) &&
            (first.exit_code != 0 && second.exit_code != 0);
 }
 
@@ -157,10 +158,7 @@ int main(int argc, char** argv) {
     uint8_t ttl = atoi(argv[1]);
     const char* command = argv[2];
     const char* output_file = "run.log";
-    char* args[argc-3];
-    for (int i = 3; i < argc; i++) {
-        args[i-3] = argv[i];
-    }
+    char** args = argv + 2;
 
     int fd;
     if ((fd = open(output_file, O_RDWR | O_TRUNC | O_CREAT, S_IWUSR | S_IRUSR)) == -1) {
@@ -179,4 +177,27 @@ int main(int argc, char** argv) {
     }
 
     close(fd);
+    exit(0);
 }
+
+//Напишете програма-наблюдател P, която изпълнява друга програма Q и я рестартира, когато Q завърши изпълнението си. На командния ред на P се подават следните параметри:
+//• праг за продължителност в секунди – едноцифрено число от 1 до 9
+//• Q
+//• незадължителни параметри на Q
+//P работи по следния алгоритъм:
+//• стартира Q с подадените параметри
+//• изчаква я да завърши изпълнението си
+//• записва в текстов файл run.log един ред с три полета - цели числа (разделени с интервал):
+//– момент на стартиране на Q (Unix time)
+//– момент на завършване на Q (Unix time)
+//– код за грешка, с който Q е завършила (exit code)
+//• проверява дали е изпълнено условието за спиране и ако не е, преминава отново към стартирането на Q
+//Условие за спиране: Ако наблюдателят P установи, че при две последователни изпълнения на Q са
+//        били изпълнени и двете условия:
+//1. кодът за грешка на Q е бил различен от 0;
+//2. разликата между момента на завършване и момента на стартиране на Q е била по-малка от
+//подадения като първи параметър на P праг;
+//то P спира цикъла от изпълняване на Q и сам завършва изпълнението си.
+//Текущото време във формат Unix time (секунди от 1 януари 1970 г.) можете да вземете с извикване
+//на системната функция time() с параметър NULL; функцията е дефинирана в time.h. Ако изпълнената програма е била прекъсната от подаден сигнал, това се приема за завършване с код за грешка
+//129.
