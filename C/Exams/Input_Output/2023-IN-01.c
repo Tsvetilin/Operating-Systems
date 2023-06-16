@@ -1,3 +1,4 @@
+//Author: Todor Kermedchiev
 #include <err.h>
 #include <fcntl.h>
 #include <unistd.h>

@@ -15,17 +15,18 @@ if [[ ! -d ${1} ]] ; then
         exit 3
 fi
 
+destDir="${1}"
 OUTPUT=$(date -I)
 
 if [[ ${#} -eq 2 ]] ; then
         OUTPUT=${2}
 fi
 
-if [[ ! -d ${destDir} ]] ; then
+if [[ ! -d ${OUTPUT} ]] ; then
         mkdir -p ${OUTPUT}
 fi
 
-for FILE in $(find ${1} -mindepth 1 -maxdepth 1 -type f -mmin -45) ; do
+for FILE in $(find ${destDir} -mindepth 1 -maxdepth 1 -type f -mmin -45) ; do
         cp ${FILE} ${OUTPUT}
 done
 
