@@ -82,7 +82,6 @@ int main(int argc, char** argv) {
 
 //v2
 
-
 #include <stdlib.h>
 #include <unistd.h>
 #include <err.h>
@@ -94,6 +93,7 @@ int main(int argc, char** argv) {
 #include <sys/types.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <stdio.h>
 
 typedef struct triplet {
     time_t start_time;
@@ -103,7 +103,6 @@ typedef struct triplet {
 
 void close_safe(int fd);
 void validate_interval(const char* str);
-void write_safe(int fd, const triplet tr);
 bool check_condition(const triplet first, const triplet second, int ttl);
 triplet execute_command(int fd, const char* command, char** args);
 void close_safe(int fd) {
@@ -115,13 +114,6 @@ void close_safe(int fd) {
 bool check_condition(const triplet first, const triplet second, int ttl) {
     return ((first.end_time - first.start_time) < ttl && (second.end_time - second.start_time) < ttl) &&
            (first.exit_code != 0 && second.exit_code != 0);
-}
-
-void write_safe(int fd, const triplet tr) {
-    if (write(fd, &tr, sizeof(triplet)) != sizeof(triplet)) {
-        close_safe(fd);
-        err(129, "Could not write to file");
-    }
 }
 
 triplet execute_command(int fd, const char* command, char** args) {
@@ -148,7 +140,7 @@ triplet execute_command(int fd, const char* command, char** args) {
         tr.exit_code = WEXITSTATUS(status);
     }
 
-    write_safe(fd, tr);
+    dprintf(fd, "%ld %ld %d", tr.start_time, tr.end_time, tr.exit_code);
     return tr;
 }
 
@@ -188,6 +180,7 @@ int main(int argc, char** argv) {
     close(fd);
     exit(0);
 }
+
 
 //Напишете програма-наблюдател P, която изпълнява друга програма Q и я рестартира, когато Q завърши изпълнението си. На командния ред на P се подават следните параметри:
 //• праг за продължителност в секунди – едноцифрено число от 1 до 9
