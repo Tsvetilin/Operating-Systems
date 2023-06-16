@@ -22,6 +22,10 @@ if [[ ${#} -eq 2 ]] ; then
         OUTPUT=${2}
 fi
 
+if [[ ! -d ${OUTPUT} ]] ; then
+        mkdir -p ${OUTPUT}
+fi
+
 for FILE in $(find ${destDir} -mindepth 1 -maxdepth 1 -type f -mmin -45) ; do
         cp ${FILE} ${OUTPUT}
 done
