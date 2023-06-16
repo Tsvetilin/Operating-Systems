@@ -79,3 +79,104 @@ int main(int argc, char** argv) {
 
         return 0;
 }
+
+//v2
+
+#include <stdlib.h>
+#include <unistd.h>
+#include <err.h>
+#include <stdint.h>
+#include <string.h>
+#include <time.h>
+#include <stdbool.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <fcntl.h>
+
+typedef struct triplet {
+    time_t start_time;
+    time_t end_time;
+    int exit_code;
+} triplet;
+
+void validate_interval(const char* str);
+void write_safe(int fd, const triplet tr);
+bool check_condition(const triplet first, const triplet second, int ttl);
+triplet execute_command(int fd, const char* command, char** args);
+
+bool check_condition(const triplet first, const triplet second, int ttl) {
+    return ((first.end_time - first.start_time) < ttl && (second.end_time - second.start_time) < ttl) ||
+           (first.exit_code != 0 && second.exit_code != 0);
+}
+
+void write_safe(int fd, const triplet tr) {
+    if (write(fd, &tr, sizeof(triplet)) != sizeof(triplet)) {
+        err(129, "Could not write to file");
+    }
+}
+
+triplet execute_command(int fd, const char* command, char** args) {
+    const pid_t child = fork();
+    if (child == -1) {
+        err(129, "Could not fork");
+    }
+
+    triplet tr;
+    if (child == 0) {
+        if (execvp(command, args) == -1) {
+            err(129, "Could not exec %s", command);
+        }
+    }
+
+    tr.start_time = time(NULL);
+    int status;
+    if (wait(&status) == -1) {
+        err(129, "Could not wait for child process");
+    }
+    tr.end_time = time(NULL);
+    if (WIFEXITED(status)) {
+        tr.exit_code = WEXITSTATUS(status);
+    }
+
+    write_safe(fd, tr);
+    return tr;
+}
+
+void validate_interval(const char* str) {
+    if (strlen(str) > 1 || str[0] > '9' || str[0] < '0') {
+        errx(129, "Invalid TTL. Should be digit");
+    }
+}
+
+int main(int argc, char** argv) {
+    if (argc < 3) {
+        errx(129, "Invalid arguments. Usage: %s <TTL> <Q> [args]", argv[0]);
+    }
+
+    validate_interval(argv[1]);
+    uint8_t ttl = atoi(argv[1]);
+    const char* command = argv[2];
+    const char* output_file = "run.log";
+    char* args[argc-3];
+    for (int i = 3; i < argc; i++) {
+        args[i-3] = argv[i];
+    }
+
+    int fd;
+    if ((fd = open(output_file, O_RDWR | O_TRUNC | O_CREAT, S_IWUSR | S_IRUSR)) == -1) {
+        err(129, "Could not open file %s", output_file);
+    }
+
+    triplet old, new;
+    old = execute_command(fd, command, args);
+    while(true) {
+        new = execute_command(fd, command, args);
+
+        if (check_condition(old, new, ttl)) {
+            break;
+        }
+        old = new;
+    }
+
+    close(fd);
+}
