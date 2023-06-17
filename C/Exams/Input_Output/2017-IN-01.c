@@ -244,3 +244,32 @@ int main(int argc, char** argv) {
     close_all();
     exit(0);
 }
+
+//Test script to create idx file - needs error handling :)
+//#include <stdlib.h>
+//#include <unistd.h>
+//#include <fcntl.h>
+//#include <stdint.h>
+//
+//struct triplet {
+//    uint16_t offset;
+//    uint8_t length;
+//    uint8_t _;
+//};
+//
+//int main(void) {
+//    int fd = open("source.dat", O_RDONLY);
+//    char c;
+//    struct triplet t;
+//    off_t offset = 0;
+//    int fd1 = open("source.idx", O_RDWR | O_CREAT | O_TRUNC, S_IWUSR | S_IRUSR);
+//    while (read(fd, &c, sizeof(c)) == 1) {
+//        if (c >= 'A' && c <= 'Z') {
+//            t.offset = offset;
+//            t.length = 2;
+//            t._ = 0;
+//            write(fd1, &t, sizeof(t));
+//        }
+//        offset++;
+//    }
+//}
