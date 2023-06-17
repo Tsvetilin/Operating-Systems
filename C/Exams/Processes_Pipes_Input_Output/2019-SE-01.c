@@ -82,6 +82,7 @@ int main(int argc, char** argv) {
 
 //v2
 
+
 #include <stdlib.h>
 #include <unistd.h>
 #include <err.h>
@@ -119,13 +120,13 @@ bool check_condition(const triplet first, const triplet second, int ttl) {
 triplet execute_command(int fd, const char* command, char** args) {
     const pid_t child = fork();
     if (child == -1) {
-        err(129, "Could not fork");
+        err(3, "Could not fork");
     }
 
     triplet tr;
     if (child == 0) {
         if (execvp(command, args) == -1) {
-            err(129, "Could not exec %s", command);
+            err(4, "Could not exec %s", command);
         }
     }
 
@@ -133,11 +134,13 @@ triplet execute_command(int fd, const char* command, char** args) {
     int status;
     if (wait(&status) == -1) {
         close_safe(fd);
-        err(129, "Could not wait for child process");
+        err(5, "Could not wait for child process");
     }
     tr.end_time = time(NULL);
     if (WIFEXITED(status)) {
         tr.exit_code = WEXITSTATUS(status);
+    } else {
+        tr.exit_code = 129;
     }
 
     dprintf(fd, "%ld %ld %d", tr.start_time, tr.end_time, tr.exit_code);
@@ -146,13 +149,13 @@ triplet execute_command(int fd, const char* command, char** args) {
 
 void validate_interval(const char* str) {
     if (strlen(str) > 1 || str[0] > '9' || str[0] < '0') {
-        errx(129, "Invalid TTL. Should be digit");
+        errx(6, "Invalid TTL. Should be digit");
     }
 }
 
 int main(int argc, char** argv) {
     if (argc < 3) {
-        errx(129, "Invalid arguments. Usage: %s <TTL> <Q> [args]", argv[0]);
+        errx(1, "Invalid arguments. Usage: %s <TTL> <Q> [args]", argv[0]);
     }
 
     validate_interval(argv[1]);
@@ -163,7 +166,7 @@ int main(int argc, char** argv) {
 
     int fd;
     if ((fd = open(output_file, O_RDWR | O_TRUNC | O_CREAT, S_IWUSR | S_IRUSR)) == -1) {
-        err(129, "Could not open file %s", output_file);
+        err(2, "Could not open file %s", output_file);
     }
 
     triplet old, new;
@@ -178,9 +181,12 @@ int main(int argc, char** argv) {
     }
 
     close(fd);
+    for (int i = 0; i < argc - 3; i++) {
+        free(args[i]);
+    }
+    free(args);
     exit(0);
 }
-
 
 //Напишете програма-наблюдател P, която изпълнява друга програма Q и я рестартира, когато Q завърши изпълнението си. На командния ред на P се подават следните параметри:
 //• праг за продължителност в секунди – едноцифрено число от 1 до 9
