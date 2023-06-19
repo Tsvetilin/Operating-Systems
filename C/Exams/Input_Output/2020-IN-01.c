@@ -143,7 +143,7 @@ int main(int argc, char** argv) {
             write_safev1(fds[2], data.new_byte, f2);
         }
     }
-    else {
+    else if (h.data_version == 0x01){
         uint16_t original_word;
         while((bytes_read = read(fds[1], &original_word, sizeof(original_word))) > 0) {
             write_safev2(fds[2], original_word, f2);
@@ -170,6 +170,8 @@ int main(int argc, char** argv) {
             lseek_safev2(fds[2], data.offset, SEEK_SET);
             write_safev2(fds[2], data.new_word, f2);
         }
+    } else {
+        errx(8, "Invalid data version")
     }
 
     close_all();
