@@ -1,4 +1,3 @@
-
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -15,6 +14,22 @@ void close_all(void);
 int open_read(const char* file_name);
 int open_creat(const char* file_name);
 void write_safe(int fd, const char* str, const char* file_name);
+uint16_t read_num(int fd, const char* file_name);
+
+uint16_t read_num(int fd, const char* file_name) {
+    int bytes_read;
+    uint16_t num;
+
+    if ((bytes_read = read(fd, &num, sizeof(num))) != sizeof(num)) {
+        if (bytes_read == -1) {
+            err(5, "Could not read from file %s", file_name);
+        } else if (bytes_read > 0) {
+            errx(5, "Could not read from file %s", file_name);
+        }
+    }
+
+    return num;
+}
 
 void write_safe(int fd, const char* str, const char* file_name) {
     int bytes_read;
@@ -78,28 +93,19 @@ int main(int argc, char** argv) {
     fds[1] = open_creat(output_file);
     write_safe(fds[1], "#include <stdint.h>\n\n", output_file);
     write_safe(fds[1], "uint32_t arrN = ", output_file);
-    dprintf(fds[1], "%ld\n", s.st_size / 2);
+    dprintf(fds[1], "%ld;\n", s.st_size / 2);
     write_safe(fds[1], "const uint16_t arr[] = {", output_file);
 
     uint16_t num;
-    int bytes_read;
-
     for (int i = 0; i < nums_count; i++) {
-        if ((bytes_read = read(fds[0], &num, sizeof(num))) != sizeof(num)) {
-            if (bytes_read == -1) {
-                err(5, "Could not read from file %s", input_file);
-            } else if (bytes_read > 0) {
-                errx(5, "Could not read from file %s", input_file);
-            }
-        }
-
-        if (i != nums_count -1) {
-            dprintf(fds[1], "%d, ", num);
-        } else {
-            dprintf(fds[1], "%d};\n", num);
-        }
+        num = read_num(fds[0], input_file);
+        dprintf(fds[1], "%d, ", num);
     }
+
+    num = read_num(fds[0], input_file);
+    dprintf(fds[1], "%d};\n", num);
 }
+
 
 //Напишете програма на C, която приема два позиционни параметъра – имена на файлове. Примерно
 //        извикване:
