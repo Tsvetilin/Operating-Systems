@@ -83,8 +83,7 @@ int main(int argc, char** argv) {
         err(3, "Could not stat file %s", input_file);
     }
 
-    int nums_count = nums_count = s.st_size / 2;
-
+    int nums_count = s.st_size / 2;
     if (s.st_size % sizeof(uint16_t) != 0 || nums_count > 524288) {
         errx(4, "Invalid input file content");
     }
