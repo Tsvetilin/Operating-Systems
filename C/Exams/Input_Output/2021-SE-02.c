@@ -170,7 +170,7 @@ uint8_t manchester_decode(uint16_t num) {
     for (int i = 15; i >= 0; i-=2) {
         if (((num >> i) & 1) && !((num >> (i-1)) & 1)) {
             result ^= (1 << (i / 2));
-        } else if (!(!((num >> i) & 0) && ((num >> (i-1)) & 1))){
+        } else if (!(!((num >> i) & 1) && ((num >> (i-1)) & 1))){
             errx(8, "Invalid input file content");
         }
     }
