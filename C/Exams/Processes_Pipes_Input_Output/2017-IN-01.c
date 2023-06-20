@@ -99,6 +99,111 @@ int main(void) {
 }
 
 
+#v2
+
+#include <stdlib.h>
+#include <unistd.h>
+#include <err.h>
+#include <errno.h>
+
+int ps[3][2];
+
+void close_all(void);
+void dup2_safe(int fd1, int fd2);
+void pipe_safe(int fd_num);
+pid_t fork_safe(void);
+
+pid_t fork_safe(void) {
+    pid_t child = fork();
+    if (child == -1) {
+        close_all();
+        err(2, "Could not fork");
+    }
+
+    return child;
+}
+
+void pipe_safe(int fd_num) {
+    if (pipe(ps[fd_num]) == -1) {
+        close_all();
+        err(1, "Could not pipe");
+    }
+}
+
+void close_all(void) {
+    int errno_ = errno;
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 2; j++) {
+            if (ps[i][j] >= 0) {
+                close(ps[i][j]);
+            }
+        }
+    }
+
+    errno = errno_;
+}
+
+void dup2_safe(int fd1, int fd2) {
+    if (dup2(fd1, fd2) == -1) {
+        close_all();
+        err(4, "Could not dup2");
+    }
+}
+
+//cut -d ':' -f7 /etc/passwd | sort | uniq -c | sort -n
+
+int main(void) {
+    pipe_safe(0);
+    pid_t child = fork_safe();
+
+    if (child == 0) {
+        close(ps[0][0]);
+        dup2_safe(ps[0][1], 1);
+        if (execlp("cut", "cut", "-d", ":", "-f", "7", "/etc/passwd", (char*)NULL) == -1) {
+            close_all();
+            err(3, "Could not execlp cut");
+        }
+    }
+
+    close(ps[0][1]);
+    pipe_safe(1);
+
+    child = fork_safe();
+
+    if (child == 0) {
+        close(ps[1][0]);
+        dup2_safe(ps[0][0], 0);
+        dup2_safe(ps[1][1], 1);
+        if (execlp("sort", "sort", (char*)NULL) == -1) {
+            close_all();
+            err(3, "Could not execlp sort");
+        }
+    }
+
+    close(ps[1][1]);
+    pipe_safe(2);
+
+    child = fork_safe();
+
+    if (child == 0) {
+        close(ps[2][0]);
+        dup2_safe(ps[2][1], 1);
+        dup2_safe(ps[1][0], 0);
+        if (execlp("uniq", "uniq", "-c", (char*)NULL) == -1) {
+            close_all();
+            err(3, "Could not execlp uniq");
+        }
+    }
+
+    close(ps[2][1]);
+    dup2_safe(ps[2][0], 0);
+    close_all();
+
+    if (execlp("sort", "sort", "-n", (char*)NULL) == -1) {
+        err(3, "Could not sort");
+    }
+}
 //Напишете програма на C, която използвайки външни shell команди през pipe() да
 //        извежда статистика за броя на използване на различните shell-ове от потребителите, дефинирани
 //        в системата. Изходът да бъде сортиран във възходящ ред според брой използвания на shell-овете.
