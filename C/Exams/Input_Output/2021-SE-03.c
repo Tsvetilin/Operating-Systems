@@ -77,7 +77,7 @@ int main(int argc, char** argv) {
     fds[1] = open_creat(output_file);
     write_safe(fds[1], "#include <stdint.h>\n\n", output_file);
     write_safe(fds[1], "uint32_t arrN = ", output_file);
-    dprintf(fds[1], "%ld\n", s.st_size / 2);
+    dprintf(fds[1], "%ld;\n", s.st_size / 2);
     write_safe(fds[1], "const uint16_t arr[] = {", output_file);
 
     uint16_t num;
