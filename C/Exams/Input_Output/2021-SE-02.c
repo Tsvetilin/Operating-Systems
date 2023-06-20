@@ -210,7 +210,7 @@ int main(int argc, char** argv) {
 
     if (bytes_read == -1) {
         err(3, "Could not read from file %s", input_file);
-    } else {
+    } else if(bytes_read > 0) {
         errx(3, "Could not read from file %s", input_file);
     }
 
