@@ -107,7 +107,6 @@ int main(int argc, char** argv) {
 
 #v2
 
-
 #include <stdlib.h>
 #include <unistd.h>
 #include <err.h>
@@ -207,12 +206,14 @@ int main(int argc, char** argv) {
         write_safe(fds[1], result, output_file);
     }
 
+    close_all();
+
     if (bytes_read == -1) {
-        close_all();
         err(3, "Could not read from file %s", input_file);
+    } else {
+        errx(3, "Could not read from file %s", input_file);
     }
 
-    close_all();
     exit(0);
 }
 
