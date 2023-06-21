@@ -221,11 +221,14 @@ int main(void) {
     wait_child();
     close(ps[2][1]);
     dup2_safe(ps[2][0], 0);
-    close_all();
 
     if (execlp("sort", "sort", "-n", (char *) NULL) == -1) {
+        close_all();
         err(3, "Could not sort");
     }
+
+    close_all();
+    exit(0);
 }
 
 //Напишете програма на C, която използвайки външни shell команди през pipe() да

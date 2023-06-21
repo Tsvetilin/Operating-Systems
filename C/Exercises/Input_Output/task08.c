@@ -7,7 +7,7 @@
 #include <stdint.h>
 
 const uint8_t files_count = 2;
-int fds[2] = {0, 0};
+int fds[2] = {-1, -1};
 
 void close_all(void);
 void close_all(void) {
@@ -25,25 +25,23 @@ int main(void) {
     const char* etc = "/etc/passwd";
     const char* copy = "./passwd";
 
-    int fd1, fd2;
-
-    if ((fd1 = open(etc, O_RDONLY)) == -1) {
+    if ((fds[0] = open(etc, O_RDONLY)) == -1) {
         err(1, "Error while opening file %s", etc);
     }
 
-    if ((fd2 = open(copy, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU)) == -1) {
+    if ((fds[1] = open(copy, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU)) == -1) {
         close_all();
         err(2, "Error while opening file %s", copy);
     }
 
     char c;
     int bytes_count;
-    while ((bytes_count = read(fd1, &c, sizeof(c))) == sizeof(c)) {
+    while ((bytes_count = read(fds[0], &c, sizeof(c))) == sizeof(c)) {
         if ( c == ':') {
             c = '?';
         }
 
-        if ((write(fd2, &c, sizeof(c))) != sizeof(c)) {
+        if ((write(fds[1], &c, sizeof(c))) != sizeof(c)) {
             close_all();
             err(3, "Error while writing in file %s", copy);
         }
