@@ -198,6 +198,7 @@ int main(int argc, char** argv)
                 position++;
         }
 
+        close_all();
         return 0;
 }
 
