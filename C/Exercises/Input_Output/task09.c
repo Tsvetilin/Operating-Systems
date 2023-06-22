@@ -37,12 +37,10 @@ int main(int argc, char** argv) {
 
     if (st.st_size == 0) {
         errx(7, "File %s is empty", file_name);
-        exit(0);
     }
 
     if ((st.st_size % sizeof(uint16_t)) != 0) {
         errx(8, "File %s does not contain only uint16_t numbers", file_name);
-        exit(0);
     }
 
     if (( fd = open(file_name, O_RDONLY)) == -1) {
