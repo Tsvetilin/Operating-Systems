@@ -77,8 +77,7 @@ int main(int argc, char** argv) {
     }
 
     const char *file1 = argv[1], *file2 = argv[2];
-    char temp[256];
-    strcpy(temp,"tempXXXXXX");
+    char temp[11] = "tempXXXXXX";
     fds[0]  = open_safe(file1);
     fds[1] = open_safe(file2);
     fds[2] = mkstemp(temp);
