@@ -30,6 +30,8 @@ int main(int argc, char** argv) {
             } else {
                 failed_counter++;
             }
+        } else {
+            failed_counter++;
         }
     }
 
