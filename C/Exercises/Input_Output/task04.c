@@ -11,14 +11,15 @@ void write_safe(int fd, char c, const char* file_name);
 void copy_content(int fd1, const char* f1, int fd2, const char* f2);
 void truncate_safe(int fd, const char* file_name);
 void lseek_safe(int fd, off_t position, int flags, const char* file_name);
-void close_all();
+void close_all(void);
+int mkstemp_safe(char* file_name);
 
-int fds[3] = {0, 0, 0};
+int fds[3] = {-1, -1, -1};
 
-void close_all() {
+void close_all(void) {
     int errno_ = errno;
     for (int i = 0; i < 3; i++) {
-        if (fds[i] > 0) {
+        if (fds[i] >= 0) {
             close(fds[i]);
         }
     }
@@ -71,6 +72,15 @@ void truncate_safe(int fd, const char* file_name) {
     }
 }
 
+int mkstemp_safe(char* file_name) {
+        int fd;
+        if ((fd = mkstemp(file_name)) == -1) {
+                err(7, "Could not create temp file");
+        }
+
+        return fd;
+}
+
 int main(int argc, char** argv) {
     if (argc != 3) {
         errx(1, "Expected 3 args");
@@ -80,7 +90,7 @@ int main(int argc, char** argv) {
     char temp[11] = "tempXXXXXX";
     fds[0]  = open_safe(file1);
     fds[1] = open_safe(file2);
-    fds[2] = mkstemp(temp);
+    fds[2] = mkstemp_safe(temp);
     truncate_safe(fds[2], temp);
     copy_content(fds[0], file1, fds[2], temp);
 
@@ -93,7 +103,7 @@ int main(int argc, char** argv) {
 
     close_all();
 
-    if (unlink(temp) != 0) {
+    if (unlink(temp) == -1) {
         err(7, "Error while unlinking file %s", temp);
     }
 }
