@@ -6,65 +6,109 @@
 #include <stdint.h>
 #include <sys/wait.h>
 
-void validate_number(long number, int start, int end, const char* num_type);
-void write_safe(const char* text);
-
-void write_safe(const char* text) {
-    if (write(0, text, strlen(text)) != (ssize_t)strlen(text)) {
-        errx(3, "Could not write to stdout");
-    }
-}
-
-void validate_number(long number, int start, int end, const char* num_type) {
-    if (number < start || number > end) {
-        errx(2, "Invalid %s. Number should be between %d-%d", num_type, start, end);
-    }
-}
-
-const char words[3][5] = {"tic", "tac", "toe\n"};
+const char L[3][4] = { "tic ", "tac ", "toe\n" };
 
 int main(int argc, char** argv) {
-    if (argc != 3) {
-        errx(1, "Invalid arguments. Usage: %s <NC> <WC>", argv[0]);
+
+    if(argc != 3) {
+        errx(1, "Arg count");
     }
 
-    char* endptr;
-    long NC, WC;
-    NC = strtol(argv[1], &endptr, 10);
-    validate_number(NC, 1, 7, "NC");
-    WC = strtol(argv[2], &endptr, 10);
-    validate_number(WC, 1, 35, "WC");
-    uint8_t counter = 0;
+    int pds[8][2];
+    int NC = atoi(argv[1]);
+    int WC = atoi(argv[2]);
 
-    while (counter < WC) {
-        write_safe(words[counter % 3]);
-        counter++;
+    if (NC < 1 || NC > 7){
+        errx(2, "#children 1-7");
+    }
 
-        for (uint8_t i = 0; i < NC && counter < WC; i++) {
-            const pid_t child = fork();
-            if (child == -1) {
-                err(4, "Could not fork");
-            }
+    if (WC < 1 || WC > 35){
+        errx(2, "#words 1-35");
+    }
 
-            if (child == 0) {
-                write_safe(words[counter % 3]);
-                exit(0);
-            }
 
-            int status;
-            if (wait(&status) == -1) {
-                err(5, "Could not wait for child process to finish");
-            }
-
-            if (!WIFEXITED(status)) {
-                errx(6, "Child process did not terminate normally");
-            }
-
-            if (WEXITSTATUS(status) != 0) {
-                errx(7, "Child process finished with exit code not 0");
-            }
-
-            counter++;
+    for(int i = 0; i < NC + 1; i++) {
+        if(pipe(pds[i]) == -1) {
+            err(2, "creating pipe");
         }
     }
+
+    int id = NC;
+    pid_t pid = 0;
+    for(int i = 0; i < NC; i++) {
+        pid = fork();
+
+        if (pid == -1) {
+            err(4, "Cannot fork() for child# %d", i);
+        }
+
+        if(pid == 0) {
+            // not neccessary,  i will remain value according to a specific child
+            id = i;
+            break;
+        }
+    }
+
+    if(pid > 0) {
+        for(int i = 1; i < NC; i++) {
+            close(pds[i][0]);
+            close(pds[i][1]);
+        }
+        close(pds[0][0]);
+        close(pds[NC][1]);
+    } else {
+        for(int i = 0; i < NC+1; i++) {
+            if(i == id) {
+                close(pds[i][1]);
+                close(pds[i+1][0]);
+                i++;
+            } else {
+                close(pds[i][0]);
+                close(pds[i][1]);
+            }
+        }
+    }
+
+    int count = 0;
+
+    if(id == NC) {
+        if(write(1, L[count % 3], 4) == -1) {
+            err(2, "writing to stdout");
+        }
+        count++;
+        if(write(pds[0][1], &count, sizeof(count)) == -1) {
+            err(2, "writing to pipe %d", count);
+        }
+    }
+
+    while(read(pds[id][0], &count, sizeof(count))) {
+        if(count == WC) {
+            break;
+        }
+        if(write(1, L[count % 3], 4) == -1) {
+            err(3, "writing to pipe ");
+        }
+        count++;
+        if(id == NC) {
+            if(write(pds[0][1], &count, sizeof(count)) == -1) {
+                err(3, "writing to pipe parent" );
+            }
+        } else {
+            if(write(pds[id+1][1], &count, sizeof(count)) == -1) {
+                err(3, "writing to pipe child");
+            }
+        }
+    }
+
+    if(id == NC) {
+        close(pds[0][1]);
+        close(pds[id][0]);
+    } else {
+        close(pds[id+1][1]);
+        close(pds[id][0]);
+    }
+
+// OR exit(0) to close all of ours file descriptors
+    return 0;
 }
+
