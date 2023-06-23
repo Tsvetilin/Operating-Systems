@@ -1,4 +1,3 @@
-
 #include <stdlib.h>
 #include <unistd.h>
 #include <err.h>
@@ -30,8 +29,8 @@ int main(int argc, char** argv) {
     if (child == 0) {
         close(pd[0]);
         dup2(pd[1], 1);
-        if (execlp("xxd", "xxd", source_file, (char*)NULL) == -1) {
-            err(4, "Could not execlp xxd");
+        if (execlp("cat", "cat", source_file, (char*)NULL) == -1) {
+            err(4, "Could not execlp cat");
         }
 
         exit(0);
@@ -52,12 +51,11 @@ int main(int argc, char** argv) {
 
     while ((bytes_read = read(pd[0], &current_byte, sizeof(current_byte))) > 0) {
         if (current_byte == escape_char) {
-            if ((bytes_read = read(fd, &current_byte, sizeof(current_byte))) > 0) {
-                unsigned char original_byte = current_byte ^ key;
+            if ((bytes_read = read(pd[0], &current_byte, sizeof(current_byte))) > 0) {
+                unsigned char original_byte = (current_byte ^ key);
                 if (!check_byte(original_byte)) {
                     errx(8, "Invalid file content");
                 }
-
                 if (write(fd, &original_byte, sizeof(original_byte)) != sizeof(original_byte)) {
                     err(6, "Could not write to file");
                 }
@@ -72,6 +70,7 @@ int main(int argc, char** argv) {
     close(fd);
     exit(0);
 }
+
 
 //При изграждане на система за пренасяне на сериен асинхронен сигнал върху радиопреносна мрежа се оказало, че големи поредици от битове само нули или само единици смущават
 //        сигнала, поради нестабилно ниво. Инженерите решили проблема, като:
