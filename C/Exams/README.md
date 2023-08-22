@@ -1,6 +1,7 @@
 # C Exam
 
-All task statements in [os-problems.pdf](<./os-problems.pdf>)
+###### All task statements in [os-problems.pdf](<./os-problems.pdf>)
+###### Sample data for some of the tasks in [GitHub](<https://github.com/avelin/fmi-os/tree/master/data>)
 
 |Task no.|Task id|Solution|
 |---|---|---|

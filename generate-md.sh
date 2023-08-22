@@ -24,6 +24,9 @@ TASK_NUM_ID=$(cat "${FILE}.converted" | grep -o -E '\. [0-9]+ 20[0-9]+\-[A-Z]+-[
 echo "|Task no.|Task id|Solution|" > "${OUT_FILE}"
 echo "|---|---|---|" >> "${OUT_FILE}"
 
+###### All task statements in [os-problems.pdf](<./os-problems.pdf>)
+###### Sample data for some of the tasks in [GitHub](<https://github.com/avelin/fmi-os/tree/master/data>)
+
 while read TASK_NUM TASK_ID ; do
     SOLUTION="MISSING"
 

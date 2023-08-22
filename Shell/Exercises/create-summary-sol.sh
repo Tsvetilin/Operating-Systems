@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# args = files to ignor
+# args = files to ignore
 
-TEMP_FILE="tasks.txt"
+OUT_FILE="tasks.txt"
 
-echo -n "" > "${TEMP_FILE}"
+echo -n "" > "${OUT_FILE}"
 
 while read DIR ; do
 
@@ -12,12 +12,12 @@ while read DIR ; do
         continue
     fi
 
-    echo -e "====== $(basename "${DIR} ") ======\n" >> "${TEMP_FILE}" 
+    echo -e "====== $(basename "${DIR} ") ======\n" >> "${OUT_FILE}" 
 
     while read FILE ; do
-        echo "<--- $(basename "${FILE}" | sed -E 's/(.*)\.(.*)$/\1/') --->" >> "${TEMP_FILE}"
-        cat "${FILE}" >> "${TEMP_FILE}"
-        echo -e "\n" >> "${TEMP_FILE}"
+        echo "<--- $(basename "${FILE}" | sed -E 's/(.*)\.(.*)$/\1/') --->" >> "${OUT_FILE}"
+        cat "${FILE}" >> "${OUT_FILE}"
+        echo -e "\n" >> "${OUT_FILE}"
     done < <(find "${DIR}" -type f)
 
 done < <(find . -mindepth 1 -maxdepth 2 -type d )
