@@ -21,6 +21,6 @@
 #s62009:x:1170:504:Denitsa Dobreva,SI,3,3:/home/SI/s62009:/bin/bash
 #s62196:x:1221:504:Elena Tuparova,SI,2,1:/home/SI/s62196:/bin/bash
 
-cat /etc/passwd | grep "/home/SI/" | awk -F ':' '{print $6}' | xargs -I{} find {} -maxdepth 0 -type d -printf "%T@ %p\n" | \
+cat /etc/passwd | grep "/home/SI/" | awk -F ':' '{print $6}' | xargs -I{} find {} -maxdepth 0 -type d -printf "%C@ %p\n" | \
  awk '{if ($1<"1551176100" && $1 >"1551168000") print $2}' | xargs -I{} grep :{}: /etc/passwd \
  | awk -F ':' '{print $1 " " $5}' | awk '{print $1 " " $2 " " $3}' | awk -F ',' '{print $1}'
