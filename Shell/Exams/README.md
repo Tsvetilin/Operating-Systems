@@ -22,12 +22,12 @@
 |12|2020-SE-01|[Solution](<./Pipes/2020-SE-01.sh>)|
 |13|2020-SE-02|[Solution](<./Pipes/2020-SE-02.sh>)|
 |14|2022-CE-01|[Solution](<./Pipes/2022-CE-01.sh>)|
-|15|2023-CE-01|MISSING|
+|15|2023-CE-01|[Solution](<./Pipes/2023-CE-01.sh>)|
+|16|2016-SE-01|[Solution](<./Pipes/2016-SE-01.sh>)|
 ### Scripts
 
 |Task no.|Task id|Solution|
 |---|---|---|
-|16|2016-SE-01|[Solution](<./Scripts/2016-SE-01.sh>)|
 |17|2016-SE-02|[Solution](<./Scripts/2016-SE-02.sh>)|
 |18|2016-SE-03|[Solution](<./Scripts/2016-SE-03.sh>)|
 |19|2016-SE-03|[Solution](<./Scripts/2016-SE-03.sh>)|
@@ -73,6 +73,7 @@
 |59|2023-SE-02|MISSING|
 |60|2023-SE-03|MISSING|
 |61|2023-SE-04|MISSING|
+|62|2016-SE-01|[Solution](<./Scripts/2016-SE-01.sh>)|
 ### Semaphores
 
 |Task no.|Task id|Solution|
