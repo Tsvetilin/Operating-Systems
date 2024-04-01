@@ -8,4 +8,4 @@
 # /home/students/ivan/.local/share/Trash/lewd.blend1
 # /tmp/baba.blend5
 
-find / -type f -user $(whomai) 2>/dev/null | grep "\.blend\[0-9]*$"
+find / -type f -user $(whomai) 2>/dev/null | grep ".blend\[0-9]*$"
